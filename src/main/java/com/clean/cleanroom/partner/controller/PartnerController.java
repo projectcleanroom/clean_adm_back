@@ -33,16 +33,12 @@ public class PartnerController {
         return new ResponseEntity<>(partnerUpdateResponseDto, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/logout")
     public ResponseEntity<PartnerLogoutResponseDto> logout (@RequestHeader("Authorization") String accessToken,
                                                             @RequestHeader("Refresh-Token") String refreshToken) {
         PartnerLogoutResponseDto partnerLogoutResponseDto = partnerService.logout(accessToken, refreshToken);
         return new ResponseEntity<>(partnerLogoutResponseDto, HttpStatus.CREATED);
     }
-
-
-
-
-
 
 }
