@@ -1,6 +1,5 @@
 package com.clean.cleanroom.partner.controller;
 
-import com.clean.cleanroom.members.dto.MembersLogoutResponseDto;
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.service.PartnerService;
 import org.springframework.http.HttpStatus;
