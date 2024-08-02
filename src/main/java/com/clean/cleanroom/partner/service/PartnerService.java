@@ -1,7 +1,9 @@
 package com.clean.cleanroom.partner.service;
 
+import com.clean.cleanroom.members.dto.MembersLogoutResponseDto;
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +33,11 @@ public class PartnerService {
         String messege = "";
         PartnerUpdateResponseDto partnerUpdateResponseDto = new PartnerUpdateResponseDto();
         return partnerUpdateResponseDto;
+    }
+
+    public PartnerLogoutResponseDto logout(String accessToken, String refreshToken) {
+        String messege = "";
+        PartnerLogoutResponseDto partnerLogoutResponseDto = new PartnerLogoutResponseDto(messege);
+        return partnerLogoutResponseDto;
     }
 }

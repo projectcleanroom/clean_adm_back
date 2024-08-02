@@ -1,5 +1,6 @@
 package com.clean.cleanroom.partner.controller;
 
+import com.clean.cleanroom.members.dto.MembersLogoutResponseDto;
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.service.PartnerService;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,13 @@ public class PartnerController {
     public ResponseEntity<PartnerUpdateResponseDto> update (@RequestParam Long id, @RequestBody PartnerUpdateRequestDto partnerUpdatepRequestDto) {
         PartnerUpdateResponseDto partnerUpdateResponseDto = partnerService.update(id, partnerUpdatepRequestDto);
         return new ResponseEntity<>(partnerUpdateResponseDto, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/logout")
+    public ResponseEntity<PartnerLogoutResponseDto> logout (@RequestHeader("Authorization") String accessToken,
+                                                            @RequestHeader("Refresh-Token") String refreshToken) {
+        PartnerLogoutResponseDto partnerLogoutResponseDto = partnerService.logout(accessToken, refreshToken);
+        return new ResponseEntity<>(partnerLogoutResponseDto, HttpStatus.CREATED);
     }
 
 
