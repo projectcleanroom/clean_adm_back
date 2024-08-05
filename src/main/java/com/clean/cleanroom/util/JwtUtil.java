@@ -63,6 +63,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    //토큰에서 이메일 추출
     public String getEmailFromToken(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
@@ -76,6 +77,7 @@ public class JwtUtil {
             throw new CustomException(ErrorMsg.INVALID_TOKEN);
         }
     }
+
 
     public String extractEmail(String token) {
         if (token.startsWith("Bearer ")) {

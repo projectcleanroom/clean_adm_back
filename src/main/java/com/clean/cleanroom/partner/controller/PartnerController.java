@@ -39,10 +39,4 @@ public class PartnerController {
         PartnerLogoutResponseDto partnerLogoutResponseDto = partnerService.logout(accessToken, refreshToken);
         return new ResponseEntity<>(partnerLogoutResponseDto, HttpStatus.CREATED);
     }
-
-
-
-
-
-
 }

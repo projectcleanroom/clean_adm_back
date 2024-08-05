@@ -15,10 +15,12 @@ public class Estimate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//
+
 //    @ManyToOne
 //    @JoinColumn(name = "commission_id")
 //    private Commission commissionId;
+
+    private Long commissionId;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")

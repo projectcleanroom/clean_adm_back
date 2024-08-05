@@ -22,7 +22,7 @@ public class EstimateListResponseDto {
 
     public  EstimateListResponseDto(Estimate estimate) {
         this.id = estimate.getId();
-        this.commissionId = estimate.getCommissionId().getId();
+        this.commissionId = estimate.getCommissionId();
         this.fixedDate = estimate.getFixedDate();
         this.price = estimate.getPrice();
         this.statement = estimate.getStatement();
