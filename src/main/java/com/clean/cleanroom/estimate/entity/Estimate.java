@@ -21,7 +21,7 @@ public class Estimate {
 //    @JoinColumn(name = "commission_id")
 //    private Commission commissionId;
 
-    private Long commissionId;
+    private Long commissionId; //테스트용
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
