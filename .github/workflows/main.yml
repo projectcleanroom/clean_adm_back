@@ -43,6 +43,7 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/cleanroomadm:latest
 
   deploy:
+    if : github.ref == 'refs/heads/develop'
     needs: build
     runs-on: ubuntu-latest
     steps:

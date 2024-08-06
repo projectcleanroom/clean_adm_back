@@ -1,5 +1,7 @@
 package com.clean.cleanroom.members.service;
 
+import com.clean.cleanroom.exception.CustomException;
+import com.clean.cleanroom.exception.ErrorMsg;
 import com.clean.cleanroom.members.dto.MembersLoginRequestDto;
 import com.clean.cleanroom.members.dto.MembersLoginResponseDto;
 import com.clean.cleanroom.members.dto.MembersLogoutResponseDto;
@@ -24,11 +26,11 @@ public class MembersLoginService {
     public ResponseEntity<MembersLoginResponseDto> login(MembersLoginRequestDto requestDto) {
         // 이메일로 회원을 조회. 없으면 예외를 던짐
         Members member = membersRepository.findByEmail(requestDto.getEmail())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 아이디입니다."));
+                .orElseThrow(() -> new CustomException(ErrorMsg.INVALID_ID));
 
         // 비밀번호가 일치하는지 확인. 일치하지 않으면 예외를 던짐
         if (!member.checkPassword(requestDto.getPassword())) {
-            throw new RuntimeException("잘못된 비밀번호");
+            throw new CustomException(ErrorMsg.INVALID_PASSWORD);
         }
 
         // JWT 토큰 생성
