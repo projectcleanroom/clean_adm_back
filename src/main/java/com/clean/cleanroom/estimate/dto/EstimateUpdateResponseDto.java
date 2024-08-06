@@ -1,5 +1,6 @@
 package com.clean.cleanroom.estimate.dto;
 
+import com.clean.cleanroom.commission.entity.Commission;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class EstimateUpdateResponseDto {
 
     private Long id;
 
-    private Long commissionId;
+    private Commission commissionId;
 
     private Long partnerId;
 

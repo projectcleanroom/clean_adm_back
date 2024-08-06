@@ -9,9 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class EstimateUpdateRequestDto {
-
-    private Long id;
+public class EstimateListResponseDto {
 
     private Long commissionId;
 
@@ -19,17 +17,16 @@ public class EstimateUpdateRequestDto {
 
     private int price;
 
-    private String statement;
-
     private LocalDateTime fixedDate;
 
+    private String statement;
 
-    public EstimateUpdateRequestDto (Estimate estimate, Commission commission) {
-        this.id = estimate.getId();
-        this.commissionId = commission.getId();
-        this.partnerId = getPartnerId();
+    public EstimateListResponseDto(Estimate estimate) {
+        this.commissionId = estimate.getCommissionId().getId();
+        this.partnerId = estimate.getPartner().getId();
         this.price = estimate.getPrice();
+        this.fixedDate = estimate.getFixedDate();
         this.statement = estimate.getStatement();
-        this.fixedDate = getFixedDate();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.clean.cleanroom.estimate.entity;
 
+import com.clean.cleanroom.commission.entity.Commission;
 import com.clean.cleanroom.estimate.dto.EstimateCreateRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimateUpdateRequestDto;
 import com.clean.cleanroom.partner.entity.Partner;
@@ -17,11 +18,9 @@ public class Estimate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "commission_id")
-//    private Commission commissionId;
-
-    private Long commissionId; //테스트용
+    @ManyToOne
+    @JoinColumn(name = "commission_id")
+    private Commission commissionId;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
@@ -38,16 +37,20 @@ public class Estimate {
 
 
 
-    public Estimate(EstimateCreateRequestDto estimateCreateRequestDto, Partner partner) {
-        this.commissionId = estimateCreateRequestDto.getCommissionId();
+    public Estimate (EstimateCreateRequestDto estimateCreateRequestDto,
+                    Commission commission,
+                    Partner partner) {
+        this.commissionId = commission;
         this.partner = partner;
         this.price = estimateCreateRequestDto.getPrice();
         this.statement = estimateCreateRequestDto.getStatement();
         this.fixedDate = LocalDateTime.parse(estimateCreateRequestDto.getFixedDate());
     }
 
-    public void updateEstimate(EstimateUpdateRequestDto estimateUpdateRequestDto, Partner partner) {
-        this.commissionId = estimateUpdateRequestDto.getCommissionId();
+    public void updateEstimate(EstimateUpdateRequestDto estimateUpdateRequestDto,
+                               Commission commission,
+                               Partner partner) {
+        this.commissionId = commission;
         this.partner = partner;
         this.price = estimateUpdateRequestDto.getPrice();
         this.fixedDate = estimateUpdateRequestDto.getFixedDate();
