@@ -14,35 +14,15 @@ import org.springframework.http.ResponseEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto<T> {
+public class ResponseDto {
     private int statusCode;
+    private int code;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY) //@JsonInclude: 메시지가 null인 경우 출력을 안한다라는 뜻
-    private String message;
-
-    @JsonInclude(JsonInclude.Include.NON_EMPTY) //@JsonInclude: data가 null인 경우 출력을 안한다라는 뜻
-    private T data;
-
-
-    //ErrorMsg를 사용하여 응답을 생성
-    public static ResponseEntity<ResponseDto> toExceptionResponseEntity(ErrorMsg errorMsg) {
+    public static ResponseEntity<ResponseDto> toExceptionResponseEntity(HttpStatus httpStatus, int code) {
         return ResponseEntity
-                .status(errorMsg.getHttpStatus())
+                .status(httpStatus)
                 .body(ResponseDto.builder()
-                        .statusCode(errorMsg.getHttpStatus().value())
-                        .data(errorMsg.getDetails())
-                        .build()
-                );
-    }
-
-    //HTTP 상태 코드와 메시지를 사용하여 응답을 생성
-    public static ResponseEntity<ResponseDto<?>> toAllExceptionResponseEntity(HttpStatus httpStatus, String errorMsg) {
-        return ResponseEntity
-                .status(httpStatus.value())
-                .body(ResponseDto.builder()
-                        .statusCode(httpStatus.value())
-                        .message(errorMsg)
-                        .build()
-                );
+                        .code(code)
+                        .build());
     }
 }
