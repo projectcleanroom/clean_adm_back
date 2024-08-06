@@ -28,8 +28,8 @@ public class PartnerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<PartnerUpdateResponseDto> update (@RequestParam Long id, @RequestBody PartnerUpdateRequestDto partnerUpdatepRequestDto) {
-        PartnerUpdateResponseDto partnerUpdateResponseDto = partnerService.update(id, partnerUpdatepRequestDto);
+    public ResponseEntity<PartnerUpdateResponseDto> update (@RequestParam Long id, @RequestBody PartnerUpdateRequestDto partnerUpdateRequestDto) {
+        PartnerUpdateResponseDto partnerUpdateResponseDto = partnerService.update(id, partnerUpdateRequestDto);
         return new ResponseEntity<>(partnerUpdateResponseDto, HttpStatus.CREATED);
     }
 
