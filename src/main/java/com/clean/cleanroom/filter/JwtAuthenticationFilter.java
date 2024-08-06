@@ -1,5 +1,6 @@
 package com.clean.cleanroom.filter;
 
+import com.clean.cleanroom.exception.CustomException;
 import com.clean.cleanroom.exception.ErrorMsg;
 import com.clean.cleanroom.jwt.service.TokenService;
 import com.clean.cleanroom.util.JwtUtil;
@@ -9,9 +10,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -39,13 +42,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 헤더가 "Bearer "로 시작하는지 확인하고 토큰과 이메일을 추출
         if (header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
-            email = jwtUtil.getEmailFromToken(token);
+
+            try {
+                email = jwtUtil.getEmailFromToken(token);
+            } catch (CustomException e) {
+                log.error("CustomException caught while parsing token: {}", e.getMessage());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(String.format("{\"code\": \"%s\"}", e.getCode()));
+                return;
+            } catch (Exception e) {
+                log.error("Exception caught while parsing token: {}", e.getMessage());
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("{\"code\": \"500\", \"message\": \"Internal Server Error\"}");
+                return;
+            }
+
         }else {
             // 헤더가 없거나 올바른 형식이 아닌 경우 적절한 응답을 설정
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(String.format("{\"message\": \"%s\"}", ErrorMsg.MISSING_AUTHORIZATION_HEADER.getDetails()));
+            response.getWriter().write(String.format("{\"code\": \"%s\"}", ErrorMsg.MISSING_AUTHORIZATION_HEADER.getCode()));
             return;
         }
 

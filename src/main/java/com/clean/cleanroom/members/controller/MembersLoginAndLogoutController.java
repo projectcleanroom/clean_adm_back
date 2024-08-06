@@ -18,12 +18,8 @@ public class MembersLoginAndLogoutController {
 
     @PostMapping("/login")
     public ResponseEntity<MembersLoginResponseDto> login(@RequestBody MembersLoginRequestDto requestDto) {
-        try {
-            return membersService.login(requestDto);
-        } catch (RuntimeException e) {
-            MembersLoginResponseDto errorResponse = new MembersLoginResponseDto(e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
-        }
+        return membersService.login(requestDto);
+
     }
 
     @PostMapping("/logout")
