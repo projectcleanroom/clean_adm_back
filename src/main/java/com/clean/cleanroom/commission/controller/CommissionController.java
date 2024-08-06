@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/partner")
+@RequestMapping("/partner")
 public class CommissionController {
 
     private final CommissionService commissionService;

@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping ("/api/partner/estimate")
+@RequestMapping ("/partner/estimate")
 public class EstimateController {
 
     private EstimateService estimateService;
@@ -47,5 +47,12 @@ public class EstimateController {
                                                                     @RequestParam Long id) {
         EstimateDeleteResponseDto responseDto = estimateService.deleteEstimate(token, id);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    // (파트너) 견적 전체 조회
+    @GetMapping("/list")
+    public ResponseEntity<List<EstimateListResponseDto>> getAllEstimatesForPartner(@RequestHeader("Authorization") String token) {
+        List<EstimateListResponseDto> estimateListResponseDtos = estimateService.getAllEstimatesForPartner(token);
+        return new ResponseEntity<>(estimateListResponseDtos, HttpStatus.OK);
     }
 }
