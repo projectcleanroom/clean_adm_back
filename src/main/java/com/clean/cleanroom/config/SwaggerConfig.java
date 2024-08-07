@@ -15,7 +15,7 @@ public class SwaggerConfig {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("public")
-                .pathsToMatch("/api/**")
+                .pathsToMatch("/api/**", "/partner/**")
                 .packagesToScan("com.clean.cleanroom")
                 .build();
     }
