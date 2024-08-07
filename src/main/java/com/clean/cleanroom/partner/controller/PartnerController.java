@@ -22,12 +22,6 @@ public class PartnerController {
         return new ResponseEntity<>(partnerSignupResponseDto, HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<PartnerLoginResponseDto> login (@RequestBody PartnerLoginRequestDto partnerLoginRequestDto) {
-        PartnerLoginResponseDto partnerLoginResponseDto = partnerService.login(partnerLoginRequestDto);
-        return new ResponseEntity<>(partnerLoginResponseDto, HttpStatus.CREATED);
-    }
-
     @PutMapping("/profile")
     public ResponseEntity<PartnerProfileResponseDto> profile (@RequestHeader("Authorization") String token, @RequestBody @Valid PartnerRequestDto requestDto) {
         PartnerProfileResponseDto partnerProfileResponseDto = partnerService.profile(token, requestDto);
@@ -39,13 +33,4 @@ public class PartnerController {
         PartnerGetProfileResponseDto partnerGetProfileResponseDto = partnerService.getProfile(token);
         return new ResponseEntity<>(partnerGetProfileResponseDto, HttpStatus.OK);
     }
-
-
-    @PutMapping("/logout")
-    public ResponseEntity<PartnerLogoutResponseDto> logout (@RequestHeader("Authorization") String accessToken,
-                                                            @RequestHeader("Refresh-Token") String refreshToken) {
-        PartnerLogoutResponseDto partnerLogoutResponseDto = partnerService.logout(accessToken, refreshToken);
-        return new ResponseEntity<>(partnerLogoutResponseDto, HttpStatus.CREATED);
-    }
-
 }
