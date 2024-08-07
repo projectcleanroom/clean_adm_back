@@ -28,13 +28,6 @@ public class PartnerService {
             return new PartnerSignupResponseDto(partner);
         }
 
-    //파트너 로그인
-    public PartnerLoginResponseDto login (PartnerLoginRequestDto partnerLoginRequestDto) {
-        String messege = "";
-        PartnerLoginResponseDto partnerLoginResponseDto = new PartnerLoginResponseDto(messege);
-        return partnerLoginResponseDto;
-    }
-
     //파트너 회원 정보 수정
     public PartnerProfileResponseDto profile(String token, PartnerRequestDto requestDto) {
        String email = jwtUtil.extractEmail(token);
@@ -47,12 +40,6 @@ public class PartnerService {
        partner.partner(requestDto);
        partnerRepository.save(partner);
        return new PartnerProfileResponseDto(partner);
-    }
-
-    public PartnerLogoutResponseDto logout(String accessToken, String refreshToken) {
-        String messege = "";
-        PartnerLogoutResponseDto partnerLogoutResponseDto = new PartnerLogoutResponseDto(messege);
-        return partnerLogoutResponseDto;
     }
 
     public PartnerGetProfileResponseDto getProfile(String token) {
