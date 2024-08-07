@@ -50,6 +50,11 @@ public enum ErrorMsg {
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     DUPLICATE_USER(HttpStatus.CONFLICT, 5001, "이미 가입된 사용자입니다."),
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, 5002, "중복된 이메일입니다."),
+    DUPLICATE_NICK(HttpStatus.CONFLICT, 5003, "중복된 닉네임입니다."),
+    DUPLICATE_PHONENUMBER(HttpStatus.CONFLICT, 5004, "중복된 전화번호입니다."),
+    DUPLICATE_MANAGERNAME(HttpStatus.CONFLICT, 5005, "중복된 담당자명입니다."),
+    DUPLICATE_COMPANYNAME(HttpStatus.CONFLICT, 5006, "중복된 회사명입니다."),
+
 
 
     /* 500 INTERNAL SERVER ERROR : 그 외 서버 에러 (컴파일 관련) */
