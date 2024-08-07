@@ -1,25 +1,32 @@
 package com.clean.cleanroom.partner.service;
 
-import com.clean.cleanroom.members.dto.MembersLogoutResponseDto;
+import com.clean.cleanroom.exception.CustomException;
+import com.clean.cleanroom.exception.ErrorMsg;
 import com.clean.cleanroom.partner.dto.*;
+import com.clean.cleanroom.partner.entity.Partner;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
-import org.springframework.http.ResponseEntity;
+import com.clean.cleanroom.util.JwtUtil;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PartnerService {
 
     private final PartnerRepository partnerRepository;
-    public PartnerService(PartnerRepository partnerRepository) {
+    private final JwtUtil jwtUtil;
+
+    public PartnerService(PartnerRepository partnerRepository, JwtUtil jwtUtil) {
         this.partnerRepository = partnerRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     //파트너 회원가입
-    public PartnerSignupResponseDto signup(PartnerSignupRequestDto partnerSignupRequestDto) {
-        String messege = "";
-        PartnerSignupResponseDto partnerSignupResponseDto = new PartnerSignupResponseDto(messege);
-        return partnerSignupResponseDto;
-    }
+    public PartnerSignupResponseDto signup(@Valid PartnerRequestDto requestDto) {
+        Partner partner = new Partner(requestDto);
+        partner.setPassword(requestDto.getPassword());
+        partnerRepository.save(partner);
+            return new PartnerSignupResponseDto(partner);
+        }
 
     //파트너 로그인
     public PartnerLoginResponseDto login (PartnerLoginRequestDto partnerLoginRequestDto) {
@@ -29,15 +36,30 @@ public class PartnerService {
     }
 
     //파트너 회원 정보 수정
-    public PartnerUpdateResponseDto update (Long id, PartnerUpdateRequestDto partnerUpdateRequestDto) {
-        String messege = "";
-        PartnerUpdateResponseDto partnerUpdateResponseDto = new PartnerUpdateResponseDto();
-        return partnerUpdateResponseDto;
+    public PartnerProfileResponseDto profile(String token, PartnerRequestDto requestDto) {
+       String email = jwtUtil.extractEmail(token);
+       Partner partner = partnerRepository.findByEmail(email).orElseThrow(
+               () -> new CustomException(ErrorMsg.INVALID_ID)
+       );
+        if (!partner.checkPassword(requestDto.getPassword())) {
+            throw new CustomException(ErrorMsg.PASSWORD_INCORRECT);
+        }
+       partner.partner(requestDto);
+       partnerRepository.save(partner);
+       return new PartnerProfileResponseDto(partner);
     }
 
     public PartnerLogoutResponseDto logout(String accessToken, String refreshToken) {
         String messege = "";
         PartnerLogoutResponseDto partnerLogoutResponseDto = new PartnerLogoutResponseDto(messege);
         return partnerLogoutResponseDto;
+    }
+
+    public PartnerGetProfileResponseDto getProfile(String token) {
+        String email = jwtUtil.extractEmail(token);
+        Partner partner = partnerRepository.findByEmail(email).orElseThrow(
+                () -> new CustomException(ErrorMsg.INVALID_ID)
+        );
+        return new PartnerGetProfileResponseDto(partner);
     }
 }

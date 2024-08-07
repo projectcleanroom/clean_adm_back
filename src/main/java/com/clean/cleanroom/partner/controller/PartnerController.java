@@ -2,6 +2,7 @@ package com.clean.cleanroom.partner.controller;
 
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.service.PartnerService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class PartnerController {
     }
 
     @PostMapping ("/signup")
-    public ResponseEntity<PartnerSignupResponseDto> signup (@RequestBody PartnerSignupRequestDto partnerSignupRequestDto) {
-        PartnerSignupResponseDto partnerSignupResponseDto = partnerService.signup(partnerSignupRequestDto);
+    public ResponseEntity<PartnerSignupResponseDto> signup (@RequestBody @Valid PartnerRequestDto requestDto) {
+        PartnerSignupResponseDto partnerSignupResponseDto = partnerService.signup(requestDto);
         return new ResponseEntity<>(partnerSignupResponseDto, HttpStatus.CREATED);
     }
 
@@ -27,10 +28,16 @@ public class PartnerController {
         return new ResponseEntity<>(partnerLoginResponseDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<PartnerUpdateResponseDto> update (@RequestParam Long id, @RequestBody PartnerUpdateRequestDto partnerUpdateRequestDto) {
-        PartnerUpdateResponseDto partnerUpdateResponseDto = partnerService.update(id, partnerUpdateRequestDto);
-        return new ResponseEntity<>(partnerUpdateResponseDto, HttpStatus.CREATED);
+    @PutMapping("/profile")
+    public ResponseEntity<PartnerProfileResponseDto> profile (@RequestHeader("Authorization") String token, @RequestBody @Valid PartnerRequestDto requestDto) {
+        PartnerProfileResponseDto partnerProfileResponseDto = partnerService.profile(token, requestDto);
+        return new ResponseEntity<>(partnerProfileResponseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<PartnerGetProfileResponseDto> getProfile(@RequestHeader("Authorization") String token) {
+        PartnerGetProfileResponseDto partnerGetProfileResponseDto = partnerService.getProfile(token);
+        return new ResponseEntity<>(partnerGetProfileResponseDto, HttpStatus.OK);
     }
 
 
