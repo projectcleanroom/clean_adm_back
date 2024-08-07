@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // /login 및 /signup 경로는 필터를 거치지 않도록 설정
-        if ("/api/members/login".equals(path) || "/api/members/signup".equals(path)) {
+        if ("/api/partner/login".equals(path) || "/api/partner/signup".equals(path)) {
             chain.doFilter(request, response);
             return;
         }
