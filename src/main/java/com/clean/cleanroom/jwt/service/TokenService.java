@@ -3,10 +3,10 @@ package com.clean.cleanroom.jwt.service;
 import com.clean.cleanroom.enums.TokenType;
 import com.clean.cleanroom.jwt.entity.RefreshToken;
 import com.clean.cleanroom.jwt.repository.RefreshTokenRepository;
-import com.clean.cleanroom.members.entity.Members;
 import com.clean.cleanroom.partner.entity.Partner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
