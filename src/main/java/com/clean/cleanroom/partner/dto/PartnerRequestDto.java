@@ -38,8 +38,7 @@ public class PartnerRequestDto {
     @Schema(description = "서비스 유형")
     private String businessType;
 
-    @NotNull
-    @NotEmpty(message = "필수 입력 항목입니다.")
+    @NotNull(message = "필수 입력 항목입니다.")
     @Enumerated(EnumType.STRING)
     @Schema(description = "개인사업자, 법인사업자, 공공기관")
     private PartnerType partnerType;
