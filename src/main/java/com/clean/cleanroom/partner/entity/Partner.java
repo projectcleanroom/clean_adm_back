@@ -36,7 +36,7 @@ public class Partner {
     @Column(nullable = false, length = 15)
     private String businessType;
 
-    @Column(nullable = false, length = 15, unique = true)
+    @Column(nullable = false, length = 15)
     private PartnerType partnerType;
 
 
