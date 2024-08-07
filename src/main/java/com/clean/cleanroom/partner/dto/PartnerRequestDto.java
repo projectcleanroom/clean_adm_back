@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
@@ -37,6 +38,7 @@ public class PartnerRequestDto {
     @Schema(description = "서비스 유형")
     private String businessType;
 
+    @NotNull
     @NotEmpty(message = "필수 입력 항목입니다.")
     @Enumerated(EnumType.STRING)
     @Schema(description = "개인사업자, 법인사업자, 공공기관")
