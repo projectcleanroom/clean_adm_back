@@ -6,6 +6,5 @@ import lombok.Getter;
 public class PartnerLoginRequestDto {
 
     private String email;
-
     private String password;
 }

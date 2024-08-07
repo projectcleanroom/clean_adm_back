@@ -1,9 +1,9 @@
 package com.clean.cleanroom.partner.controller;
 
-import com.clean.cleanroom.partner.dto.*;
-import com.clean.cleanroom.partner.service.PartnerService;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
+import com.clean.cleanroom.partner.dto.PartnerLoginRequestDto;
+import com.clean.cleanroom.partner.dto.PartnerLoginResponseDto;
+import com.clean.cleanroom.partner.dto.PartnerLogoutResponseDto;
+import com.clean.cleanroom.partner.service.PartnerLoginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,24 +11,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/partner")
 public class PartnerLoginAndLogoutController {
 
-    private final PartnerService partnerService;
+    private final PartnerLoginService partnerLoginService;
 
-    public PartnerLoginAndLogoutController(PartnerService partnerService) {
-        this.partnerService = partnerService;
+    public PartnerLoginAndLogoutController(PartnerLoginService partnerLoginService) {
+        this.partnerLoginService = partnerLoginService;
+
     }
 
     @PostMapping("/login")
-    public ResponseEntity<PartnerLoginResponseDto> login (@RequestBody PartnerLoginRequestDto partnerLoginRequestDto) {
-        PartnerLoginResponseDto partnerLoginResponseDto = partnerService.login(partnerLoginRequestDto);
-        return new ResponseEntity<>(partnerLoginResponseDto, HttpStatus.CREATED);
+    public ResponseEntity<PartnerLoginResponseDto> login(@RequestBody PartnerLoginRequestDto requestDto) {
+        return partnerLoginService.login(requestDto);
+
     }
 
-    @PutMapping("/logout")
-    public ResponseEntity<PartnerLogoutResponseDto> logout (@RequestHeader("Authorization") String accessToken,
-                                                            @RequestHeader("Refresh-Token") String refreshToken) {
-        PartnerLogoutResponseDto partnerLogoutResponseDto = partnerService.logout(accessToken, refreshToken);
-        return new ResponseEntity<>(partnerLogoutResponseDto, HttpStatus.CREATED);
+    @PostMapping("/logout")
+    public ResponseEntity<PartnerLogoutResponseDto> logout(@RequestHeader("Authorization") String accessToken, @RequestHeader("Refresh-Token") String refreshToken) {
+        return partnerLoginService.logout(accessToken, refreshToken);
     }
-
 }
 

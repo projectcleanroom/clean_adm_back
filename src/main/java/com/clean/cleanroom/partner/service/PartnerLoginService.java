@@ -1,14 +1,14 @@
-package com.clean.cleanroom.members.service;
+package com.clean.cleanroom.partner.service;
 
 import com.clean.cleanroom.exception.CustomException;
 import com.clean.cleanroom.exception.ErrorMsg;
-import com.clean.cleanroom.members.dto.MembersLoginRequestDto;
-import com.clean.cleanroom.members.dto.MembersLoginResponseDto;
-import com.clean.cleanroom.members.dto.MembersLogoutResponseDto;
-import com.clean.cleanroom.members.entity.Members;
-import com.clean.cleanroom.members.repository.MembersRepository;
-import com.clean.cleanroom.util.JwtUtil;
 import com.clean.cleanroom.jwt.service.TokenService;
+import com.clean.cleanroom.partner.dto.PartnerLoginRequestDto;
+import com.clean.cleanroom.partner.dto.PartnerLoginResponseDto;
+import com.clean.cleanroom.partner.dto.PartnerLogoutResponseDto;
+import com.clean.cleanroom.partner.entity.Partner;
+import com.clean.cleanroom.partner.repository.PartnerRepository;
+import com.clean.cleanroom.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -16,29 +16,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MembersLoginService {
+public class PartnerLoginService {
 
-    private final MembersRepository membersRepository;
+    private final PartnerRepository partnerRepository;
     private final JwtUtil jwtUtil;
     private final TokenService tokenService;
 
     // 로그인 로직
-    public ResponseEntity<MembersLoginResponseDto> login(MembersLoginRequestDto requestDto) {
+    public ResponseEntity<PartnerLoginResponseDto> login(PartnerLoginRequestDto requestDto) {
         // 이메일로 회원을 조회. 없으면 예외를 던짐
-        Members member = membersRepository.findByEmail(requestDto.getEmail())
+        Partner partner= partnerRepository.findByEmail(requestDto.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorMsg.INVALID_ID));
 
         // 비밀번호가 일치하는지 확인. 일치하지 않으면 예외를 던짐
-        if (!member.checkPassword(requestDto.getPassword())) {
+        if (!partner.checkPassword(requestDto.getPassword())) {
             throw new CustomException(ErrorMsg.INVALID_PASSWORD);
         }
 
         // JWT 토큰 생성
-        String token = jwtUtil.generateAccessToken(member.getEmail());
-        String refreshToken = jwtUtil.generateRefreshToken(member.getEmail());
+        String token = jwtUtil.generateAccessToken(partner.getEmail());
+        String refreshToken = jwtUtil.generateRefreshToken(partner.getEmail());
 
         // 토큰 저장
-//        tokenService.saveToken(member, refreshToken);
+        tokenService.saveToken(partner, refreshToken);
 
         // HTTP 헤더에 토큰 추가
         HttpHeaders headers = new HttpHeaders();
@@ -46,7 +46,7 @@ public class MembersLoginService {
         headers.set("Refresh-Token", "Bearer " + refreshToken);
 
         // 응답 DTO 생성
-        MembersLoginResponseDto responseDto = new MembersLoginResponseDto(member);
+        PartnerLoginResponseDto responseDto = new PartnerLoginResponseDto(partner);
 
         // 응답 반환
         return ResponseEntity.ok()
@@ -55,7 +55,7 @@ public class MembersLoginService {
     }
 
     // 로그아웃 로직
-    public ResponseEntity<MembersLogoutResponseDto> logout(String accessToken, String refreshToken) {
+    public ResponseEntity<PartnerLogoutResponseDto> logout(String accessToken, String refreshToken) {
         // Access Token 검증 및 무효화 처리
         if (accessToken != null && accessToken.startsWith("Bearer ")) {
             String actualAccessToken = accessToken.substring(7);
@@ -73,7 +73,7 @@ public class MembersLoginService {
         }
 
         // 로그아웃 성공 응답 반환
-        MembersLogoutResponseDto response = new MembersLogoutResponseDto("로그아웃 되었습니다.");
+        PartnerLogoutResponseDto response = new PartnerLogoutResponseDto("로그아웃 되었습니다.");
         return ResponseEntity.ok(response);
     }
 }
