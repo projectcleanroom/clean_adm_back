@@ -2,11 +2,13 @@ package com.clean.cleanroom.partner.service;
 
 import com.clean.cleanroom.exception.CustomException;
 import com.clean.cleanroom.exception.ErrorMsg;
-import com.clean.cleanroom.partner.dto.*;
+import com.clean.cleanroom.partner.dto.PartnerGetProfileResponseDto;
+import com.clean.cleanroom.partner.dto.PartnerProfileResponseDto;
+import com.clean.cleanroom.partner.dto.PartnerRequestDto;
+import com.clean.cleanroom.partner.dto.PartnerSignupResponseDto;
 import com.clean.cleanroom.partner.entity.Partner;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
 import com.clean.cleanroom.util.JwtUtil;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,28 +25,20 @@ public class PartnerService {
 
     //파트너 회원가입
     @Transactional
-    public PartnerSignupResponseDto signup(@Valid PartnerRequestDto requestDto) {
-        Partner partner = new Partner(requestDto);
+    public PartnerSignupResponseDto signup(PartnerRequestDto requestDto) {
         // email 유무
-        if (!partner.getEmail().equals(requestDto.getEmail()) &&
-                partnerRepository.existsByEmail(requestDto.getEmail())) {
-            throw new CustomException(ErrorMsg.INVALID_ID);
+        if (partnerRepository.existsByEmail(requestDto.getEmail())) {
+            throw new CustomException(ErrorMsg.DUPLICATE_EMAIL);
         }
         // phoneNumber 유무
-        if (!partner.getPhoneNumber().equals(requestDto.getPhoneNumber()) &&
-                partnerRepository.existsByPhoneNumber(requestDto.getPhoneNumber())) {
+        if (partnerRepository.existsByPhoneNumber(requestDto.getPhoneNumber())) {
             throw new CustomException(ErrorMsg.DUPLICATE_PHONENUMBER);
         }
-        // managerName 유무
-        if (!partner.getManagerName().equals(requestDto.getManagerName()) &&
-                partnerRepository.existsByManagerName(requestDto.getManagerName())) {
-            throw new CustomException(ErrorMsg.DUPLICATE_MANAGERNAME);
-        }
         // companyName 유무
-        if (!partner.getCompanyName().equals(requestDto.getCompanyName()) &&
-                partnerRepository.existsByCompanyName(requestDto.getCompanyName())) {
+        if (partnerRepository.existsByCompanyName(requestDto.getCompanyName())) {
             throw new CustomException(ErrorMsg.DUPLICATE_COMPANYNAME);
         }
+        Partner partner = new Partner(requestDto);
         partner.setPassword(requestDto.getPassword());
         partnerRepository.save(partner);
         return new PartnerSignupResponseDto(partner);
@@ -61,11 +55,6 @@ public class PartnerService {
         if (!partner.getPhoneNumber().equals(requestDto.getPhoneNumber()) &&
                 partnerRepository.existsByPhoneNumber(requestDto.getPhoneNumber())) {
             throw new CustomException(ErrorMsg.DUPLICATE_PHONENUMBER);
-        }
-        // managerName 유무
-        if (!partner.getManagerName().equals(requestDto.getManagerName()) &&
-                partnerRepository.existsByManagerName(requestDto.getManagerName())) {
-            throw new CustomException(ErrorMsg.DUPLICATE_MANAGERNAME);
         }
         // companyName 유무
         if (!partner.getCompanyName().equals(requestDto.getCompanyName()) &&

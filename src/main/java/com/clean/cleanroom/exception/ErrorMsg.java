@@ -52,8 +52,8 @@ public enum ErrorMsg {
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, 5002, "중복된 이메일입니다."),
     DUPLICATE_NICK(HttpStatus.CONFLICT, 5003, "중복된 닉네임입니다."),
     DUPLICATE_PHONENUMBER(HttpStatus.CONFLICT, 5004, "중복된 전화번호입니다."),
-    DUPLICATE_MANAGERNAME(HttpStatus.CONFLICT, 5005, "중복된 담당자명입니다."),
-    DUPLICATE_COMPANYNAME(HttpStatus.CONFLICT, 5006, "중복된 회사명입니다."),
+    DUPLICATE_COMPANYNAME(HttpStatus.CONFLICT, 5005, "중복된 회사명입니다."),
+
 
 
 
