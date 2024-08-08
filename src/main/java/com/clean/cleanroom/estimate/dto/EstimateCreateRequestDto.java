@@ -7,7 +7,7 @@ public class EstimateCreateRequestDto {
 
     private Long commissionId;
 
-    private Long partnerId;
+    private Long partner;
 
     private int price;
 

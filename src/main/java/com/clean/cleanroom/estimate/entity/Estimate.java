@@ -35,6 +35,9 @@ public class Estimate {
     @Column(nullable = true, length = 1000)
     private String statement;
 
+    @Column(nullable = false)
+    private Boolean approved = false;
+
 
 
     public Estimate (EstimateCreateRequestDto estimateCreateRequestDto,
@@ -45,6 +48,7 @@ public class Estimate {
         this.price = estimateCreateRequestDto.getPrice();
         this.statement = estimateCreateRequestDto.getStatement();
         this.fixedDate = LocalDateTime.parse(estimateCreateRequestDto.getFixedDate());
+        this.approved = false;
     }
 
     public void updateEstimate(EstimateUpdateRequestDto estimateUpdateRequestDto,
@@ -55,5 +59,6 @@ public class Estimate {
         this.price = estimateUpdateRequestDto.getPrice();
         this.fixedDate = estimateUpdateRequestDto.getFixedDate();
         this.statement = estimateUpdateRequestDto.getStatement();
+        this.approved = false;
     }
 }
