@@ -1,0 +1,29 @@
+
+<included> <!-- 어떤 appender를 사용할지 추가 (자바에서 import와 동일) -->
+
+    <!-- 에러 로그를 기록할 롤링 파일Appender: ERROR 레벨 로그만 기록 -->
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 로깅 필터설정 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level> <!-- 필터링할 로그 레벨 설정 -->
+            <onMatch>ACCEPT</onMatch> <!-- 조건이 맞을 때 로그 기록 허용 -->
+            <onMismatch>DENY</onMismatch> <!-- 조건이 맞지 않을 때 로그 기록 거부 -->
+        </filter>
+
+        <!-- 어떻게 출력할 것인가 Encoder -->
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern> <!-- 파일에 기록할 패턴 설정 -->
+        </encoder>
+
+        <!-- 롤링 정책: 로그 파일을 일정 크기 또는 시간 단위로 롤링(분할) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./log/pium-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern> <!-- 롤링된 파일 이름 패턴 설정 -->
+            <maxFileSize>50MB</maxFileSize> <!-- 최대 파일 크기 설정 -->
+            <maxHistory>30</maxHistory> <!-- 보관할 최대 파일 수 설정 -->
+            <totalSizeCap>3GB</totalSizeCap> <!-- 전체 로그 파일의 최대 크기 설정 -->
+        </rollingPolicy>
+
+    </appender>
+
+</included>
