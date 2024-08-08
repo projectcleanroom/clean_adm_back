@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/partner")
+@RequestMapping("/partner")
 public class PartnerLoginAndLogoutController {
 
     private final PartnerLoginService partnerLoginService;

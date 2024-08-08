@@ -26,7 +26,6 @@ public class PartnerService {
     //파트너 회원가입
     @Transactional
     public PartnerSignupResponseDto signup(PartnerRequestDto requestDto) {
-
         // email 유무
         if (partnerRepository.existsByEmail(requestDto.getEmail())) {
             throw new CustomException(ErrorMsg.DUPLICATE_EMAIL);
@@ -35,11 +34,10 @@ public class PartnerService {
         if (partnerRepository.existsByPhoneNumber(requestDto.getPhoneNumber())) {
             throw new CustomException(ErrorMsg.DUPLICATE_PHONENUMBER);
         }
-//         companyName 유무
+        // companyName 유무
         if (partnerRepository.existsByCompanyName(requestDto.getCompanyName())) {
             throw new CustomException(ErrorMsg.DUPLICATE_COMPANYNAME);
         }
-
         Partner partner = new Partner(requestDto);
         partner.setPassword(requestDto.getPassword());
         partnerRepository.save(partner);
