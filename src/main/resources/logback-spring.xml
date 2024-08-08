@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 어떻게 기록할 것인가 (Logger)--> <!-- 로깅 설정 파일 (logback-spring.xml) -->
+<configuration>
+
+    <!-- 로그 컬러 설정 컨버터 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+
+    <!-- 변수명과, 패턴 저장 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %clr(%5level) %cyan(%logger) - %msg%n"/>
+
+
+    <!-- 어디에 기록할 것인가 (Appender) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"> <!-- 콘솔에 로그를 기록하는 Appender 설정 -->
+        <encoder> <!-- 어떻게 출력할 것인가 Encoder -->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern> <!-- 인코딩할 패턴설정 -->
+        </encoder>
+    </appender>
+
+    <!-- 루트로거: 최상위 로거 설정 (INFO 레벨 이상의 로그를 콘솔에 기록)-->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/> <!-- CONSOLE Appender를 root logger에 연결 -->
+    </root>
+
+</configuration>
