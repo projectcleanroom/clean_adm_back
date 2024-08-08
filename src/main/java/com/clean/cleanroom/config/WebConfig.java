@@ -24,7 +24,7 @@ public class WebConfig {
         registrationBean.setFilter(new JwtAuthenticationFilter(jwtUtil, tokenService)); // 두 인자 전달
 
         // 필터가 적용될 URL 패턴 설정
-        registrationBean.addUrlPatterns("/api/*");
+        registrationBean.addUrlPatterns("/partner/*");
 
         // 필터 등록 빈 반환
         return registrationBean;
