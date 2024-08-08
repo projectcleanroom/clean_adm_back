@@ -1,0 +1,21 @@
+<included> <!-- 어떤 appender를 사용할지 추가 (자바에서 import와 동일) -->
+
+    <!-- 롤링 파일Appender: INFO 레벨 이상의 로그를 파일에 기록 -->
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender"> <!-- 파일에 로그를 기록하는 Appender 설정 -->
+
+        <!-- 어떻게 출력할 것인가 Encoder -->
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern> <!-- 인코딩할 패턴설정 -->
+        </encoder>
+
+        <!-- 롤링 정책: 로그 파일을 일정 크기 또는 시간 단위로 롤링(분할) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./log/pium-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern> <!-- 롤링된 파일 이름 패턴 설정 -->
+            <maxFileSize>50MB</maxFileSize> <!-- 최대 파일 크기 설정 -->
+            <maxHistory>30</maxHistory> <!-- 보관할 최대 파일 수 설정 -->
+            <totalSizeCap>1GB</totalSizeCap> <!-- 전체 로그 파일의 최대 크기 설정 -->
+        </rollingPolicy>
+
+    </appender>
+
+</included>
