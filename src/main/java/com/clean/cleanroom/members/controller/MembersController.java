@@ -18,15 +18,15 @@ public class MembersController {
         this.membersService = membersService;
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<MembersSignupResponseDto> signup(@RequestBody @Valid MembersRequestDto requestDto) {
-        MembersSignupResponseDto membersSignupResponseDto = membersService.signup(requestDto);
-        return new ResponseEntity<>(membersSignupResponseDto, HttpStatus.CREATED);
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<MembersSignupResponseDto> signup(@RequestBody @Valid MembersRequestDto requestDto) {
+//        MembersSignupResponseDto membersSignupResponseDto = membersService.signup(requestDto);
+//        return new ResponseEntity<>(membersSignupResponseDto, HttpStatus.CREATED);
+//    }
 
-    @PutMapping("/profile")
-    public ResponseEntity<MembersProfileResponseDto> profile(@RequestParam Long id, @RequestBody @Valid MembersRequestDto requestDto) {
-        MembersProfileResponseDto membersProfileResponseDto = membersService.profile(id, requestDto);
-        return new ResponseEntity<>(membersProfileResponseDto, HttpStatus.OK);
-    }
+//    @PutMapping("/profile")
+//    public ResponseEntity<MembersProfileResponseDto> profile(@RequestParam Long id, @RequestBody @Valid MembersRequestDto requestDto) {
+//        MembersProfileResponseDto membersProfileResponseDto = membersService.profile(id, requestDto);
+//        return new ResponseEntity<>(membersProfileResponseDto, HttpStatus.OK);
+//    }
 }

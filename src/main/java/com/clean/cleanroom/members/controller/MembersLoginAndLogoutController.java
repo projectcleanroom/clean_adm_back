@@ -16,14 +16,14 @@ public class MembersLoginAndLogoutController {
 
     private final MembersLoginService membersService;
 
-    @PostMapping("/login")
-    public ResponseEntity<MembersLoginResponseDto> login(@RequestBody MembersLoginRequestDto requestDto) {
-        return membersService.login(requestDto);
+//    @PostMapping("/login")
+//    public ResponseEntity<MembersLoginResponseDto> login(@RequestBody MembersLoginRequestDto requestDto) {
+//        return membersService.login(requestDto);
+//
+//    }
 
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<MembersLogoutResponseDto> logout(@RequestHeader("Authorization") String accessToken, @RequestHeader("Refresh-Token") String refreshToken) {
-        return membersService.logout(accessToken, refreshToken);
-    }
+//    @PostMapping("/logout")
+//    public ResponseEntity<MembersLogoutResponseDto> logout(@RequestHeader("Authorization") String accessToken, @RequestHeader("Refresh-Token") String refreshToken) {
+//        return membersService.logout(accessToken, refreshToken);
+//    }
 }
