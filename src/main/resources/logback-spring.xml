@@ -13,62 +13,58 @@
 
 
 
-    <!-- 어디에 기록할 것인가 (콘솔Appender) -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"> <!-- 콘솔에 로그를 기록하는 Appender 설정 -->
-        <encoder> <!-- 어떻게 출력할 것인가 Encoder -->
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern> <!-- 인코딩할 패턴설정 -->
-        </encoder>
-    </appender>
+    <!--local 환경에서의 로그설정-->
+    <springProfile name="local">
+
+        <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
+        <include resource="console-appender.xml"/>
+
+        <!-- 루트 로거 설정: INFO 레벨 이상의 로그를 콘솔에 기록 -->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
+        </root>
+
+    </springProfile>
 
 
-    <!-- 롤링 파일Appender: INFO 레벨 이상의 로그를 파일에 기록 -->
-    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender"> <!-- 파일에 로그를 기록하는 Appender 설정 -->
+    <!--develop 환경에서의 로그설정-->
+    <springProfile name="develop">
 
-        <!-- 어떻게 출력할 것인가 Encoder -->
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern> <!-- 인코딩할 패턴설정 -->
-        </encoder>
+        <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
+        <include resource="file-error-appender.xml"/>
 
-        <!-- 롤링 정책: 로그 파일을 일정 크기 또는 시간 단위로 롤링(분할) -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/pium-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern> <!-- 롤링된 파일 이름 패턴 설정 -->
-            <maxFileSize>50MB</maxFileSize> <!-- 최대 파일 크기 설정 -->
-            <maxHistory>30</maxHistory> <!-- 보관할 최대 파일 수 설정 -->
-            <totalSizeCap>1GB</totalSizeCap> <!-- 전체 로그 파일의 최대 크기 설정 -->
-        </rollingPolicy>
-    </appender>
+        <!-- 루트 로거 설정: ERROR 레벨의 로그를 파일에 기록 -->
+        <root level="ERROR">
+            <appender-ref ref="FILE-ERROR"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
+        </root>
 
-    <!-- 에러 로그를 기록할 롤링 파일Appender: ERROR 레벨 로그만 기록 -->
-    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level> <!-- 필터링할 로그 레벨 설정 -->
-            <onMatch>ACCEPT</onMatch> <!-- 조건이 맞을 때 로그 기록 허용 -->
-            <onMismatch>DENY</onMismatch> <!-- 조건이 맞지 않을 때 로그 기록 거부 -->
-        </filter>
+    </springProfile>
 
-        <!-- 어떻게 출력할 것인가 Encoder -->
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern> <!-- 파일에 기록할 패턴 설정 -->
-        </encoder>
+    <!--blue 환경에서의 로그설정-->
+    <springProfile name="blue">
 
-        <!-- 롤링 정책: 로그 파일을 일정 크기 또는 시간 단위로 롤링(분할) -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/pium-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern> <!-- 롤링된 파일 이름 패턴 설정 -->
-            <maxFileSize>50MB</maxFileSize> <!-- 최대 파일 크기 설정 -->
-            <maxHistory>30</maxHistory> <!-- 보관할 최대 파일 수 설정 -->
-            <totalSizeCap>3GB</totalSizeCap> <!-- 전체 로그 파일의 최대 크기 설정 -->
-        </rollingPolicy>
-    </appender>
+        <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
+        <include resource="file-error-appender.xml"/>
 
+        <!-- 루트 로거 설정: ERROR 레벨의 로그를 파일에 기록 -->
+        <root level="ERROR">
+            <appender-ref ref="FILE-ERROR"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
+        </root>
 
+    </springProfile>
 
-    <!-- 루트로거: 최상위 로거 설정 (INFO 레벨 이상의 로그를 콘솔에 기록)-->
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/> <!-- 콘솔 Appender를 root logger에 연결 -->
-        <appender-ref ref="FILE-INFO"/> <!-- 파일-INFO Appender를 root logger에 연결 -->
-        <appender-ref ref="FILE-ERROR"/> <!-- 파일-ERROR Appender를 root logger에 연결 -->
-    </root>
+    <!--green 환경에서의 로그설정-->
+    <springProfile name="green">
 
+        <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
+        <include resource="file-error-appender.xml"/>
+
+        <!-- 루트 로거 설정: ERROR 레벨의 로그를 파일에 기록 -->
+        <root level="ERROR">
+            <appender-ref ref="FILE-ERROR"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
+        </root>
+
+    </springProfile>
 
 
 </configuration>
