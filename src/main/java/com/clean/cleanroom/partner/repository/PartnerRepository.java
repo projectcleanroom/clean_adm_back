@@ -13,7 +13,5 @@ public interface PartnerRepository extends JpaRepository<Partner, Long> {
 
     boolean existsByPhoneNumber(String phoneNumber);
 
-    boolean existsByManagerName(String managerName);
-
     boolean existsByCompanyName(String companyName);
 }

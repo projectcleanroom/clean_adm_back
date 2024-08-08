@@ -36,7 +36,8 @@ public class Partner {
     @Column(nullable = false, length = 15)
     private String businessType;
 
-    @Column(nullable = false, length = 15)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
     private PartnerType partnerType;
 
 
