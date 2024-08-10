@@ -65,4 +65,8 @@ public class Estimate {
         this.statement = estimateUpdateRequestDto.getStatement();
         this.approved = false;
     }
+
+    public Boolean getApproved() {
+        return approved;
+    }
 }
