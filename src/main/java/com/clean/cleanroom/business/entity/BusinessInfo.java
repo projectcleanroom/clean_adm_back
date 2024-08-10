@@ -7,6 +7,7 @@ import com.clean.cleanroom.partner.entity.Partner;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
 
@@ -20,19 +21,24 @@ public class BusinessInfo {
     private Long id;
 
     @Column(nullable = false)
-    private Long businessNumber; //사업자 등록 번호
+    @Comment("사업자 등록 번호")
+    private Long businessNumber;
 
     @Column(nullable = false)
-    private LocalDate openingDate; //개업 연월일
+    @Comment("개업 연월일")
+    private LocalDate openingDate;
 
     @Column(nullable = false, length = 25)
-    private String corporationName; //법인명
+    @Comment("법인명")
+    private String corporationName;
 
     @Column(nullable = false)
-    private Long corporationNumber; //법인등록번호
+    @Comment("법인등록번호")
+    private Long corporationNumber;
 
     @Column(nullable = false, length = 255)
-    private String location; //사업장 소재지
+    @Comment("사업장 소재지")
+    private String location;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")

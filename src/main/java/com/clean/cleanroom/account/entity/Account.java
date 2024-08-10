@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
@@ -23,12 +24,15 @@ public class Account {
     private Long id;
 
     @Column(name = "email", nullable = false)
+    @Comment("이메일")
     private String email;
 
     @Column(name = "account_number", nullable = false, length = 25)
+    @Comment("계좌번호")
     private String accountNumber;
 
     @Column(name = "bank", nullable = false, length = 25)
+    @Comment("은행")
     private String bank;
 
     public Account(String email, AccountRequestDto accountRequestDto) {
