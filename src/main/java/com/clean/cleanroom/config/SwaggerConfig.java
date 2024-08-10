@@ -38,6 +38,6 @@ public class SwaggerConfig {
                                 .in(SecurityScheme.In.HEADER)
                                 .scheme("bearer")
                                 .bearerFormat("JWT")))
-                .servers(List.of(new Server().url("https://mb.clean-room.co.kr")));
+                .servers(List.of(new Server().url("https://pt.clean-room.co.kr")));
     }
 }
