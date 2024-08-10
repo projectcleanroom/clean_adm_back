@@ -31,10 +31,12 @@
     <springProfile name="develop">
 
         <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
+        <include resource="console-appender.xml"/> <!-- 콘솔에 로그 출력 -->
         <include resource="file-error-appender.xml"/>
 
-        <!-- 루트 로거 설정: ERROR 레벨의 로그를 파일에 기록 -->
-        <root level="ERROR">
+        <!-- 루트 로거 설정: INFO로 설정 -->
+        <root level="INFO">
+            <include resource="console-appender.xml"/> <!-- 콘솔에 로그 출력 -->
             <appender-ref ref="FILE-ERROR"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
         </root>
 
@@ -44,10 +46,12 @@
     <springProfile name="blue">
 
         <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
-        <include resource="file-error-appender.xml"/>
+        <include resource="console-appender.xml"/> <!-- 콘솔에 로그 출력 -->
+        <include resource="file-error-appender.xml"/> <!-- 파일에 에러로그 저장 -->
 
-        <!-- 루트 로거 설정: ERROR 레벨의 로그를 파일에 기록 -->
-        <root level="ERROR">
+        <!-- 루트 로거 설정: INFO로 설정 -->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE-ERROR"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
         </root>
 
@@ -57,10 +61,12 @@
     <springProfile name="green">
 
         <!-- include = 어떤 appender를 사용할지 추가 (자바 import와 동일)  -->
+        <include resource="console-appender.xml"/> <!-- 콘솔에 로그 출력 -->
         <include resource="file-error-appender.xml"/>
 
-        <!-- 루트 로거 설정: ERROR 레벨의 로그를 파일에 기록 -->
-        <root level="ERROR">
+        <!-- 루트 로거 설정: INFO로 설정 -->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE-ERROR"/> <!-- 필요한 appender 이름을 appender-ref 태그에 추가 -->
         </root>
 
