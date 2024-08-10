@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
 
@@ -30,23 +31,29 @@ public class Commission {
     private Address address;
 
     @Column(nullable = false, length = 255)
+    @Comment("이미지")
     private String image;
 
     @Column(nullable = false)
+    @Comment("평수")
     private int size;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Comment("주거 형태")
     private HouseType houseType;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Comment("청소 종류")
     private CleanType cleanType;
 
     @Column(nullable = false)
+    @Comment("희망 날짜")
     private LocalDateTime desiredDate;
 
     @Column(nullable = true, length = 255)
+    @Comment("특이사항")
     private String significant;
 
 }

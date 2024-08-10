@@ -7,6 +7,7 @@ import com.clean.cleanroom.partner.entity.Partner;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
 
@@ -27,16 +28,19 @@ public class Estimate {
     private Partner partner;
 
     @Column(nullable = false)
+    @Comment("가격")
     private int price;
 
     @Column(nullable = true)
+    @Comment("확정 일자")
     private LocalDateTime fixedDate;
 
     @Column(nullable = true, length = 1000)
+    @Comment("특이사항")
     private String statement;
 
-    @Column(nullable = false)
-    private Boolean approved = false;
+    @Comment("승인 상태")
+    private boolean approved = false;
 
 
 
