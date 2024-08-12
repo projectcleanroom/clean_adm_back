@@ -2,10 +2,7 @@ package com.clean.cleanroom.partner.service;
 
 import com.clean.cleanroom.exception.CustomException;
 import com.clean.cleanroom.exception.ErrorMsg;
-import com.clean.cleanroom.partner.dto.PartnerGetProfileResponseDto;
-import com.clean.cleanroom.partner.dto.PartnerProfileResponseDto;
-import com.clean.cleanroom.partner.dto.PartnerRequestDto;
-import com.clean.cleanroom.partner.dto.PartnerSignupResponseDto;
+import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.entity.Partner;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
 import com.clean.cleanroom.util.JwtUtil;
@@ -46,7 +43,7 @@ public class PartnerService {
 
     //파트너 회원 정보 수정
     @Transactional
-    public PartnerProfileResponseDto profile(String token, PartnerRequestDto requestDto) {
+    public PartnerProfileResponseDto profile(String token, PartnerUpdateProfileRequestDto requestDto) {
         String email = jwtUtil.extractEmail(token);
         // email 유무
         Partner partner = partnerRepository.findByEmail(email).orElseThrow(
@@ -65,8 +62,12 @@ public class PartnerService {
 //        if (!partner.checkPassword(requestDto.getPassword())) {
 //            throw new CustomException(ErrorMsg.PASSWORD_INCORRECT);
 //        }
-//        partner.partner(requestDto);
-        partner.setPassword(requestDto.getPassword());
+        if (requestDto.getPassword() != null && !requestDto.getPassword().isEmpty()) {
+            partner.setPassword(requestDto.getPassword());
+        }
+        //        partner.partner(requestDto);
+//        partner.setPassword(requestDto.getPassword());
+        partner.updatePartner(requestDto);
         partnerRepository.save(partner);
         return new PartnerProfileResponseDto(partner);
     }
