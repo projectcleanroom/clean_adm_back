@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 public class CommissionListResponseDto {
 
+    private long id;
+
     private String memberNick;
 
     private String image;
@@ -27,7 +29,8 @@ public class CommissionListResponseDto {
     private String significant;
 
 
-    public CommissionListResponseDto(String memberNick,
+    public CommissionListResponseDto(Long id,
+                                     String memberNick,
                                      String image,
                                      int size,
                                      HouseType houseType,
@@ -35,6 +38,7 @@ public class CommissionListResponseDto {
                                      String address,
                                      LocalDateTime desiredDate,
                                      String significant) {
+        this.id = id;
         this.memberNick = memberNick;
         this.image = image;
         this.size = size;
