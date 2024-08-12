@@ -10,3 +10,4 @@ public class CleanRoomApplication {
         SpringApplication.run(CleanRoomApplication.class, args);
     }
 }
+
