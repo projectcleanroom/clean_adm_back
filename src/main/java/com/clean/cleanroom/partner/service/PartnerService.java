@@ -62,10 +62,11 @@ public class PartnerService {
             throw new CustomException(ErrorMsg.DUPLICATE_COMPANYNAME);
         }
         // 비밀번호 일치 확인
-        if (!partner.checkPassword(requestDto.getPassword())) {
-            throw new CustomException(ErrorMsg.PASSWORD_INCORRECT);
-        }
-        partner.partner(requestDto);
+//        if (!partner.checkPassword(requestDto.getPassword())) {
+//            throw new CustomException(ErrorMsg.PASSWORD_INCORRECT);
+//        }
+//        partner.partner(requestDto);
+        partner.setPassword(requestDto.getPassword());
         partnerRepository.save(partner);
         return new PartnerProfileResponseDto(partner);
     }
