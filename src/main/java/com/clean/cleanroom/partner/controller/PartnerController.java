@@ -22,8 +22,8 @@ public class PartnerController {
         return new ResponseEntity<>(partnerSignupResponseDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/profile")
-    public ResponseEntity<PartnerProfileResponseDto> profile (@RequestHeader("Authorization") String token, @RequestBody @Valid PartnerRequestDto requestDto) {
+    @PatchMapping("/profile")
+    public ResponseEntity<PartnerProfileResponseDto> profile (@RequestHeader("Authorization") String token, @RequestBody PartnerUpdateProfileRequestDto requestDto) {
         PartnerProfileResponseDto partnerProfileResponseDto = partnerService.profile(token, requestDto);
         return new ResponseEntity<>(partnerProfileResponseDto, HttpStatus.OK);
     }

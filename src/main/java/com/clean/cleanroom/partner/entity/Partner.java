@@ -2,6 +2,7 @@ package com.clean.cleanroom.partner.entity;
 
 import com.clean.cleanroom.enums.PartnerType;
 import com.clean.cleanroom.partner.dto.PartnerRequestDto;
+import com.clean.cleanroom.partner.dto.PartnerUpdateProfileRequestDto;
 import com.clean.cleanroom.util.PasswordUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -71,4 +72,21 @@ public class Partner {
         this.password = PasswordUtil.encodePassword(password);
     }
 
+    public void updatePartner(PartnerUpdateProfileRequestDto requestDto) {
+        if (requestDto.getPhoneNumber() != null) {
+            this.phoneNumber = requestDto.getPhoneNumber();
+        }
+        if (requestDto.getManagerName() != null) {
+            this.managerName = requestDto.getManagerName();
+        }
+        if (requestDto.getCompanyName() != null) {
+            this.companyName = requestDto.getCompanyName();
+        }
+        if (requestDto.getBusinessType() != null) {
+            this.businessType = requestDto.getBusinessType();
+        }
+        if (requestDto.getPartnerType() != null) {
+            this.partnerType = requestDto.getPartnerType();
+        }
+    }
 }

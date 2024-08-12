@@ -4,19 +4,22 @@ import com.clean.cleanroom.account.dto.AccountRequestDto;
 import com.clean.cleanroom.account.dto.MessageResponseDto;
 import com.clean.cleanroom.account.entity.Account;
 import com.clean.cleanroom.account.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/partner/account")
 public class AccountController {
 
-    @Autowired
     private AccountService accountInfoService;
-    @Autowired
     private AccountService accountService;
+
+    public AccountController(AccountService accountInfoService, AccountService accountService) {
+        this.accountInfoService = accountInfoService;
+        this.accountService = accountService;
+    }
 
     // 계좌 생성 메서드
     @PostMapping("/signup")
