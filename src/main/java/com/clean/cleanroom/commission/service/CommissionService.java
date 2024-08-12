@@ -52,6 +52,7 @@ public class CommissionService {
 
         for (Commission commission : commissions) {
             commissionList.add(new CommissionListResponseDto(
+                    commission.getId(),
                     commission.getMembers().getNick(),
                     commission.getImage(),
                     commission.getSize(),
