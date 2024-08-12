@@ -21,7 +21,7 @@ public class Estimate {
 
     @ManyToOne
     @JoinColumn(name = "commission_id")
-    private Commission commissionId;
+    private Commission commission;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
@@ -47,7 +47,7 @@ public class Estimate {
     public Estimate (EstimateCreateRequestDto estimateCreateRequestDto,
                     Commission commission,
                     Partner partner) {
-        this.commissionId = commission;
+        this.commission = commission;
         this.partner = partner;
         this.price = estimateCreateRequestDto.getPrice();
         this.statement = estimateCreateRequestDto.getStatement();
@@ -58,7 +58,7 @@ public class Estimate {
     public void updateEstimate(EstimateUpdateRequestDto estimateUpdateRequestDto,
                                Commission commission,
                                Partner partner) {
-        this.commissionId = commission;
+        this.commission = commission;
         this.partner = partner;
         this.price = estimateUpdateRequestDto.getPrice();
         this.fixedDate = estimateUpdateRequestDto.getFixedDate();

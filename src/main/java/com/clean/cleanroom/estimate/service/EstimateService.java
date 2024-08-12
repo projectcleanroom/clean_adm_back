@@ -55,7 +55,7 @@ public class EstimateService {
         estimateRepository.save(estimate);
 
         return new EstimateCreateResponseDto (
-                estimate.getCommissionId().getId(),
+                estimate.getCommission().getId(),
                 estimate.getPartner().getId(),
                 estimate.getPrice(),
                 estimate.getFixedDate(),
@@ -93,7 +93,7 @@ public class EstimateService {
 
         return new EstimateUpdateResponseDto(
                 estimate.getId(),
-                estimate.getCommissionId(),
+                estimate.getCommission(),
                 estimate.getPartner().getId(),
                 estimate.getPrice(),
                 estimate.getStatement(),

@@ -23,7 +23,7 @@ public class EstimateListResponseDto {
     private Boolean approved;
 
     public EstimateListResponseDto(Estimate estimate) {
-        this.commissionId = estimate.getCommissionId().getId();
+        this.commissionId = estimate.getCommission().getId();
         this.partnerId = estimate.getPartner().getId();
         this.price = estimate.getPrice();
         this.fixedDate = estimate.getFixedDate();
