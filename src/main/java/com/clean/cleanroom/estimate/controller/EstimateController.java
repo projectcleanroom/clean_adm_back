@@ -41,6 +41,14 @@ public class EstimateController {
         return new ResponseEntity<>(estimateUpdateResponseDto, HttpStatus.OK);
     }
 
+    @PatchMapping
+    public ResponseEntity<EstimatePatchResponseDto> patchEstimate(@RequestHeader("Authorization") String token,
+                                                                  @RequestParam Long id,
+                                                                  @RequestBody EstimatePatchRequestDto estimatePatchRequestDto) {
+        EstimatePatchResponseDto responseDto = estimateService.patchEstimate(token, id, estimatePatchRequestDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
     // 견적서 삭제
     @DeleteMapping
     public ResponseEntity<EstimateDeleteResponseDto> deleteEstimate(@RequestHeader("Authorization") String token,
@@ -55,7 +63,4 @@ public class EstimateController {
         List<EstimateListResponseDto> estimateListResponseDtos = estimateService.getAllEstimatesForPartner(token);
         return new ResponseEntity<>(estimateListResponseDtos, HttpStatus.OK);
     }
-
-
-    // 견적 단건 조회
 }

@@ -99,6 +99,38 @@ public class EstimateService {
     }
 
 
+    // 가격 수정
+    public EstimatePatchResponseDto patchEstimate(String token,
+                                                  Long id,
+                                                  EstimatePatchRequestDto estimatePatchRequestDto) {
+        String email = jwtUtil.extractEmail(token);
+
+        Partner partner = getPartnerByEmail(email);
+
+        // 해당 견적서 찾기
+        Estimate estimate = estimateRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorMsg.ESTIMATE_NOT_FOUND));
+
+        // 요청한 파트너와 견적서의 파트너가 일치하는지 확인
+        if (!estimate.getPartner().equals(partner)) {
+            throw new CustomException(ErrorMsg.PARTNER_NOT_FOUND);
+        }
+
+        // `patchEstimate` 메서드를 사용하여 가격만 업데이트
+        estimate.patchEstimate(estimatePatchRequestDto, estimate.getCommission(), partner);
+
+        // 업데이트된 견적서를 저장
+        estimateRepository.save(estimate);
+
+        // 응답 DTO 생성
+        Members members = estimate.getCommission().getMembers();
+        Address address = estimate.getCommission().getAddress();
+        Commission commission = estimate.getCommission();
+
+        return new EstimatePatchResponseDto(estimate, members, address, commission);
+    }
+
+
     //견적서 삭제
     public EstimateDeleteResponseDto deleteEstimate(String token, Long id) {
 
