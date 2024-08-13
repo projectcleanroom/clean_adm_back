@@ -92,14 +92,10 @@ public class EstimateService {
 
         estimateRepository.save(estimate);
 
-        return new EstimateUpdateResponseDto(
-                estimate.getId(),
-                estimate.getCommission(),
-                estimate.getPartner().getId(),
-                estimate.getPrice(),
-                estimate.getStatement(),
-                estimate.getFixedDate()
-        );
+        Members members = commission.getMembers();
+        Address address = commission.getAddress();
+
+        return new EstimateUpdateResponseDto(estimate, members, address, commission);
     }
 
 
@@ -141,8 +137,15 @@ public class EstimateService {
 
         List<EstimateListResponseDto> estimateListResponseDtos = new ArrayList<>();
 
+        // 각 Estimate에 대해 DTO 변환
         for (Estimate estimate : estimates) {
-            estimateListResponseDtos.add(new EstimateListResponseDto(estimate));
+            Commission commission = estimate.getCommission();
+            Members members = commission.getMembers();
+            Address address = commission.getAddress();
+
+            // DTO에 필요한 정보를 전달하여 객체 생성
+            EstimateListResponseDto dto = new EstimateListResponseDto(estimate, members, address, commission);
+            estimateListResponseDtos.add(dto);
         }
 
         return estimateListResponseDtos;
