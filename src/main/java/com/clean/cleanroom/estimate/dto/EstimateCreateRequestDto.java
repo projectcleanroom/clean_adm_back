@@ -7,8 +7,6 @@ public class EstimateCreateRequestDto {
 
     private Long commissionId;
 
-    private Long partner;
-
     private int tmpPrice;
 
     private String statement;
