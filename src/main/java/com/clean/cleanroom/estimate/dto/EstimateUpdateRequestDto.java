@@ -22,14 +22,4 @@ public class EstimateUpdateRequestDto {
     private String statement;
 
     private LocalDateTime fixedDate;
-
-
-    public EstimateUpdateRequestDto (Estimate estimate, Commission commission) {
-        this.id = estimate.getId();
-        this.commissionId = commission.getId();
-        this.partnerId = getPartnerId();
-        this.price = estimate.getPrice();
-        this.statement = estimate.getStatement();
-        this.fixedDate = getFixedDate();
-    }
 }

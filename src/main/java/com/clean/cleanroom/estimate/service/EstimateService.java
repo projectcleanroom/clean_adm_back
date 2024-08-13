@@ -7,6 +7,8 @@ import com.clean.cleanroom.estimate.entity.Estimate;
 import com.clean.cleanroom.estimate.repository.EstimateRepository;
 import com.clean.cleanroom.exception.CustomException;
 import com.clean.cleanroom.exception.ErrorMsg;
+import com.clean.cleanroom.members.entity.Address;
+import com.clean.cleanroom.members.entity.Members;
 import com.clean.cleanroom.partner.entity.Partner;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
 import com.clean.cleanroom.util.JwtUtil;
@@ -48,19 +50,18 @@ public class EstimateService {
         Commission commission = commissionRepository.findById(estimateCreateRequestDto.getCommissionId())
                 .orElseThrow(() -> new CustomException(ErrorMsg.COMMISSION_NOT_FOUND));
 
+        // Members와 Address 정보 가져오기
+        Members members = commission.getMembers();
+        Address address = commission.getAddress();
+
         //견적 생성
         Estimate estimate = new Estimate(estimateCreateRequestDto, commission, partner);
 
         //레포지토리에 저장
         estimateRepository.save(estimate);
 
-        return new EstimateCreateResponseDto (
-                estimate.getCommission().getId(),
-                estimate.getPartner().getId(),
-                estimate.getPrice(),
-                estimate.getFixedDate(),
-                estimate.getStatement()
-        );
+        // 새로운 DTO 반환
+        return new EstimateCreateResponseDto(estimate, members, address, commission);
     }
 
 

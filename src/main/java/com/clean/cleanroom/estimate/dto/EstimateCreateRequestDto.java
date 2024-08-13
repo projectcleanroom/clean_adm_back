@@ -9,7 +9,7 @@ public class EstimateCreateRequestDto {
 
     private Long partner;
 
-    private int price;
+    private int tmpPrice;
 
     private String statement;
 
