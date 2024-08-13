@@ -28,8 +28,12 @@ public class Estimate {
     private Partner partner;
 
     @Column(nullable = false)
-    @Comment("가격")
+    @Comment("확정 가격")
     private int price;
+
+    @Column(nullable = false)
+    @Comment("임시 가격")
+    private int tmpPrice;
 
     @Column(nullable = true)
     @Comment("확정 일자")
@@ -49,7 +53,7 @@ public class Estimate {
                     Partner partner) {
         this.commission = commission;
         this.partner = partner;
-        this.price = estimateCreateRequestDto.getPrice();
+        this.tmpPrice = estimateCreateRequestDto.getTmpPrice();
         this.statement = estimateCreateRequestDto.getStatement();
         this.fixedDate = LocalDateTime.parse(estimateCreateRequestDto.getFixedDate());
         this.approved = false;
