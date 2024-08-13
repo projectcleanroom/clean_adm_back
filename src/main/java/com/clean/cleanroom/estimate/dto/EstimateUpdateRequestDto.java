@@ -13,8 +13,6 @@ public class EstimateUpdateRequestDto {
 
     private Long commissionId;
 
-    private Long partnerId;
-
     private int price;
 
     private String statement;
