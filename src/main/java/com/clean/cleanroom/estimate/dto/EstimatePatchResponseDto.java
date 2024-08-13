@@ -18,6 +18,7 @@ public class EstimatePatchResponseDto {
     private Long id;
     private Long commissionId;
     private Long partnerId;
+    private int tmpPrice;
     private int Price;
     private LocalDateTime fixedDate; // 확정일자
     private String statement;
@@ -33,6 +34,7 @@ public class EstimatePatchResponseDto {
                                       Commission commission) {
         this.commissionId = estimate.getCommission().getId();
         this.partnerId = estimate.getPartner().getId();
+        this.tmpPrice = estimate.getTmpPrice();
         this.Price = estimate.getPrice();
         this.fixedDate = estimate.getFixedDate();
         this.statement = estimate.getStatement();
