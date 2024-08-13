@@ -2,6 +2,7 @@ package com.clean.cleanroom.estimate.entity;
 
 import com.clean.cleanroom.commission.entity.Commission;
 import com.clean.cleanroom.estimate.dto.EstimateCreateRequestDto;
+import com.clean.cleanroom.estimate.dto.EstimatePatchRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimateUpdateRequestDto;
 import com.clean.cleanroom.partner.entity.Partner;
 import jakarta.persistence.*;
@@ -70,7 +71,9 @@ public class Estimate {
         this.approved = false;
     }
 
-    public Boolean getApproved() {
-        return approved;
+    public void patchEstimate(EstimatePatchRequestDto estimatePatchRequestDto, Commission commission, Partner partner) {
+        this.commission = commission;
+        this.partner = partner;
+        this.price = estimatePatchRequestDto.getPrice();
     }
 }
