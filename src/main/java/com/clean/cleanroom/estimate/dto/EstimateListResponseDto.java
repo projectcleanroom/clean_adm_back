@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EstimateListResponseDto {
 
+    private long id;
     private Long commissionId;
     private Long partnerId;
     private int tmpPrice;
@@ -33,6 +34,7 @@ public class EstimateListResponseDto {
                                      Members members,
                                      Address address,
                                      Commission commission) {
+        this.id = estimate.getId();
         this.commissionId = estimate.getCommission().getId();
         this.partnerId = estimate.getPartner().getId();
         this.tmpPrice = estimate.getTmpPrice();
