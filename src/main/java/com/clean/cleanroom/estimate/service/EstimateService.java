@@ -2,6 +2,7 @@ package com.clean.cleanroom.estimate.service;
 
 import com.clean.cleanroom.commission.entity.Commission;
 import com.clean.cleanroom.commission.repository.CommissionRepository;
+import com.clean.cleanroom.enums.StatusType;
 import com.clean.cleanroom.estimate.dto.*;
 import com.clean.cleanroom.estimate.entity.Estimate;
 import com.clean.cleanroom.estimate.repository.EstimateRepository;
@@ -182,6 +183,41 @@ public class EstimateService {
 
         return estimateListResponseDtos;
     }
+
+
+    // 회원에게 발송한 확정 견적 내역 조회
+    public List<EstimateConfirmListResponseDto> getAllConfirmEstimates(String token) {
+
+        String email = jwtUtil.extractEmail(token);
+        Partner partner = getPartnerByEmail(email);
+
+        //findByPartnerIdAndStatusIn에서 In은 필드가 여러개일 때 사용함
+        List<Estimate> estimates = estimateRepository.findByPartnerIdAndStatusIn (
+                partner.getId(), List.of(StatusType.SEND, StatusType.FINISH)
+        );
+
+        // 견적 내역이 존재하지 않으면 예외 발생
+        if (estimates.isEmpty()) {
+            throw new CustomException(ErrorMsg.ESTIMATE_NOT_FOUND);
+        }
+
+        List<EstimateConfirmListResponseDto> estimateConfirmListResponseDtos = new ArrayList<>();
+
+        // 각 Estimate에 대해 DTO 변환
+        for (Estimate estimate : estimates) {
+            Commission commission = estimate.getCommission();
+            Members members = commission.getMembers();
+            Address address = commission.getAddress();
+
+            // DTO에 필요한 정보를 전달하여 객체 생성
+            EstimateConfirmListResponseDto dto = new EstimateConfirmListResponseDto(estimate, members, address, commission);
+            estimateConfirmListResponseDtos.add(dto);
+        }
+
+        return estimateConfirmListResponseDtos;
+    }
+
+
 
 
     //이메일로 파트너 찾는 메서드
