@@ -74,6 +74,6 @@ public class Estimate {
     public void patchEstimate(EstimatePatchRequestDto estimatePatchRequestDto, Commission commission, Partner partner) {
         this.commission = commission;
         this.partner = partner;
-        this.price = estimatePatchRequestDto.getPrice();
+        this.tmpPrice = estimatePatchRequestDto.getTmpPrice();
     }
 }
