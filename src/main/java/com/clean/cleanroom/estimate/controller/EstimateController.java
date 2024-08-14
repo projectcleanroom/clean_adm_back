@@ -41,6 +41,7 @@ public class EstimateController {
         return new ResponseEntity<>(estimateUpdateResponseDto, HttpStatus.OK);
     }
 
+
     @PatchMapping
     public ResponseEntity<EstimatePatchResponseDto> patchEstimate(@RequestHeader("Authorization") String token,
                                                                   @RequestParam Long id,
@@ -57,7 +58,7 @@ public class EstimateController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    // (파트너) 견적 전체 조회
+    // 파트너 본인이 작성한 견적 전체 조회
     @GetMapping("/list")
     public ResponseEntity<List<EstimateListResponseDto>> getAllEstimatesForPartner(@RequestHeader("Authorization") String token) {
         List<EstimateListResponseDto> estimateListResponseDtos = estimateService.getAllEstimatesForPartner(token);

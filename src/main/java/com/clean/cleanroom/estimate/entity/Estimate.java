@@ -1,6 +1,8 @@
 package com.clean.cleanroom.estimate.entity;
 
 import com.clean.cleanroom.commission.entity.Commission;
+import com.clean.cleanroom.enums.HouseType;
+import com.clean.cleanroom.enums.StatusType;
 import com.clean.cleanroom.estimate.dto.EstimateCreateRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimatePatchRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimateUpdateRequestDto;
@@ -47,6 +49,11 @@ public class Estimate {
     @Comment("승인 상태")
     private boolean approved = false;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Comment("견적 상태")
+    private StatusType status;
+
 
 
     public Estimate (EstimateCreateRequestDto estimateCreateRequestDto,
@@ -58,6 +65,7 @@ public class Estimate {
         this.statement = estimateCreateRequestDto.getStatement();
         this.fixedDate = LocalDateTime.parse(estimateCreateRequestDto.getFixedDate());
         this.approved = false;
+        this.status = StatusType.CHECK;
     }
 
     public void updateEstimate(EstimateUpdateRequestDto estimateUpdateRequestDto,
@@ -75,5 +83,6 @@ public class Estimate {
         this.commission = commission;
         this.partner = partner;
         this.tmpPrice = estimatePatchRequestDto.getTmpPrice();
+        this.status = estimatePatchRequestDto.getStatus();
     }
 }
