@@ -64,4 +64,11 @@ public class EstimateController {
         List<EstimateListResponseDto> estimateListResponseDtos = estimateService.getAllEstimatesForPartner(token);
         return new ResponseEntity<>(estimateListResponseDtos, HttpStatus.OK);
     }
+
+    // 확정가격 발송한 견적 내역 조회
+    @GetMapping("/confirmlist")
+    public ResponseEntity<List<EstimateConfirmListResponseDto>> getAllConfirmEstimates(@RequestHeader("Authorization") String token) {
+        List<EstimateConfirmListResponseDto> estimateConfirmListResponseDtos = estimateService.getAllConfirmEstimates(token);
+        return new ResponseEntity<>(estimateConfirmListResponseDtos, HttpStatus.OK);
+    }
 }
