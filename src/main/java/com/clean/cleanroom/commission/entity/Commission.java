@@ -2,6 +2,7 @@ package com.clean.cleanroom.commission.entity;
 
 import com.clean.cleanroom.enums.CleanType;
 import com.clean.cleanroom.enums.HouseType;
+import com.clean.cleanroom.enums.StatusType;
 import com.clean.cleanroom.estimate.entity.Estimate;
 import com.clean.cleanroom.members.entity.Address;
 import com.clean.cleanroom.members.entity.Members;
@@ -52,6 +53,11 @@ public class Commission {
     @Enumerated(EnumType.STRING)
     @Comment("청소 종류")
     private CleanType cleanType;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Comment("의뢰 상태")
+    private StatusType status;
 
     @Column(nullable = false)
     @Comment("희망 날짜")
