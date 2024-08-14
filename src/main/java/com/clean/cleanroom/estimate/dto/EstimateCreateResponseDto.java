@@ -3,6 +3,7 @@ package com.clean.cleanroom.estimate.dto;
 import com.clean.cleanroom.commission.entity.Commission;
 import com.clean.cleanroom.enums.CleanType;
 import com.clean.cleanroom.enums.HouseType;
+import com.clean.cleanroom.enums.StatusType;
 import com.clean.cleanroom.estimate.entity.Estimate;
 import com.clean.cleanroom.members.entity.Address;
 import com.clean.cleanroom.members.entity.Members;
@@ -25,6 +26,7 @@ public class EstimateCreateResponseDto {
     private HouseType houseType;
     private CleanType cleanType;
     private LocalDateTime desiredDate; // 희망날짜
+    private StatusType status;
 
 
 
@@ -43,5 +45,6 @@ public class EstimateCreateResponseDto {
         this.houseType = commission.getHouseType();
         this.cleanType = commission.getCleanType();
         this.desiredDate = commission.getDesiredDate();
+        this.status = estimate.getStatus();
     }
 }
