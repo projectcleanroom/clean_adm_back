@@ -28,6 +28,7 @@ public class EstimateConfirmListResponseDto {
     private CleanType cleanType;
     private LocalDateTime desiredDate; // 희망날짜
     private StatusType status;
+    private StatusType commissionStatus;
 
 
     public EstimateConfirmListResponseDto (Estimate estimate,
@@ -46,5 +47,6 @@ public class EstimateConfirmListResponseDto {
         this.cleanType = commission.getCleanType();
         this.desiredDate = commission.getDesiredDate();
         this.status = estimate.getStatus();
+        this.commissionStatus = commission.getStatus();
     }
 }
