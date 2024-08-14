@@ -10,6 +10,4 @@ public class EstimatePatchRequestDto {
     private int tmpPrice;
 
     private Long commissionId;
-
-    private int price;
 }
