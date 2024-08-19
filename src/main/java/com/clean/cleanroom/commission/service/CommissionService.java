@@ -31,6 +31,8 @@ public class CommissionService {
         this.jwtUtil = jwtUtil;
     }
 
+
+    //전체 의뢰 목록 조회
     public List<CommissionListResponseDto> getAllCommissions(String token) {
 
         //토큰에서 이메일 추출
@@ -58,6 +60,7 @@ public class CommissionService {
                     commission.getSize(),
                     commission.getHouseType(),
                     commission.getCleanType(),
+                    commission.getStatus(),
                     commission.getAddress().getAddress(),
                     commission.getDesiredDate(),
                     commission.getSignificant()
