@@ -24,6 +24,7 @@ public class EstimateConfirmListResponseDto {
     private String statement;
     private String nick;
     private String address;
+    private String image;
     private HouseType houseType;
     private CleanType cleanType;
     private LocalDateTime desiredDate; // 희망날짜
@@ -43,6 +44,7 @@ public class EstimateConfirmListResponseDto {
         this.statement = estimate.getStatement();
         this.nick = members.getNick();
         this.address = address.getAddress();
+        this.image = commission.getImage();
         this.houseType = commission.getHouseType();
         this.cleanType = commission.getCleanType();
         this.desiredDate = commission.getDesiredDate();
