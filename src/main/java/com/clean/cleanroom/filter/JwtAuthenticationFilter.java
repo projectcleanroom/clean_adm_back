@@ -30,10 +30,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // /login 및 /signup 경로는 필터를 거치지 않도록 설정
-        if ("/partner/login".equals(path) || "/partner/signup".equals(path)) {
+        if ("/partner/login".equals(path) || "/partner/signup".equals(path) || "/partner/validate".equals(path)) {
             chain.doFilter(request, response);
             return;
         }
+
         // Authorization 헤더에서 JWT 토큰 추출
         String header = request.getHeader("Authorization");
         String token = null;

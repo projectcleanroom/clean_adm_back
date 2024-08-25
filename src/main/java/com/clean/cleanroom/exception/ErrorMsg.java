@@ -17,6 +17,8 @@ public enum ErrorMsg {
     PASSWORD_INCORRECT(HttpStatus.BAD_REQUEST, 1002, "비밀번호가 옳지 않습니다."),
     MISSING_AUTHORIZATION_HEADER(HttpStatus.BAD_REQUEST, 1004, "Authorization 헤더가 없거나 형식이 올바르지 않습니다."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, 1005, "잘못된 비밀번호 입니다."),
+    BAD_JSON_REQUEST(HttpStatus.BAD_REQUEST, 1010, "JSON 포맷에 적합하지 않은 요청입니다."),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST,1011, "잘못된 요청입니다."),
 
 
     /* 401 UNAUTHORIZED : 인증되지 않음 */
@@ -44,6 +46,7 @@ public enum ErrorMsg {
     BUSINESS_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, 4008, "사업자 등록을 찾을 수 없습니다."),
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 4009, "계좌번호를 찾을 수 없습니다."),
     INVALID_ID(HttpStatus.NOT_FOUND, 4010, "존재하지 않는 아이디입니다."),
+    REQUEST_DATA_MALFORMED(HttpStatus.NOT_FOUND, 4011, "필수 요청 파라미터가 누락되었습니다."),
 
 
 
@@ -56,10 +59,15 @@ public enum ErrorMsg {
 
 
 
+    /* 413 PAYLOAD_TOO_LARGE : 요청 데이터가 너무 큼 */
+    TOO_LARGE_REQUEST(HttpStatus.PAYLOAD_TOO_LARGE, 6000, "요청 사업자번호 또는 정보가 100개를 초과하였습니다."),
+
+
 
     /* 500 INTERNAL SERVER ERROR : 그 외 서버 에러 (컴파일 관련) */
     FAILED_TO_EXECUTE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, 6001, "파일 실행에 실패했습니다."),
-    FAILED_TO_COMPILE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, 6002, "파일 컴파일에 실패했습니다.");
+    FAILED_TO_COMPILE_FILE(HttpStatus.INTERNAL_SERVER_ERROR, 6002, "파일 컴파일에 실패했습니다."),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 6003, "시스템 오류가 발생했습니다.");
 
 
     private final HttpStatus httpStatus;
