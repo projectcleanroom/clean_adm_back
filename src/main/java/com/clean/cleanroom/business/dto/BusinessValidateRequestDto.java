@@ -31,5 +31,11 @@ public class BusinessValidateRequestDto {
 
         @JsonProperty("p_nm")
         private String representativeName; // 대표자 성명 (필수)
+
+        @JsonProperty("b_nm")
+        private String companyName; // 회사 이름
+
+        @JsonProperty("b_type")
+        private String businessType; // 업종 추가
     }
 }

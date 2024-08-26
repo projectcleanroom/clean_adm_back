@@ -21,8 +21,8 @@ public class BusinessValidateResponseDto {
     @JsonProperty("valid_cnt")
     private int validCount; // 사업자 정보 갯수
 
-//    @JsonProperty("b_no")
-//    private String validMessage; // 유효성 검사 메세지
+    @JsonProperty("b_no")
+    private String validMessage; // 유효성 검사 메세지
 
     @JsonProperty("data")
     private List<BusinessResponse> data; // 유효성 검사 리스트
@@ -38,8 +38,8 @@ public class BusinessValidateResponseDto {
         @JsonProperty("valid")
         private String valid; // 유효성 검사 결과 코드 ("01" - 정상, 기타 - 오류)
 
-//        @JsonProperty("valid_msg")
-//        private String validMessage; // 결과 메세지
+        @JsonProperty("valid_msg")
+        private String validMessage; // 결과 메세지
 
         @JsonProperty("request_param")
         private RequestParam requestParam; // 사업자 정보 상세 메세지
@@ -71,7 +71,7 @@ public class BusinessValidateResponseDto {
             private String businessSector; // 사업 부문
 
             @JsonProperty("b_type")
-            private String businessType; // 업종
+            private String businessType; // 업종 추가
 
             @JsonProperty("b_adr")
             private String businessAddress; // 사업장 주소
