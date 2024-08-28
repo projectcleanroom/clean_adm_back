@@ -37,5 +37,8 @@ public class BusinessValidateRequestDto {
 
         @JsonProperty("b_sector")
         private String businessSector; // 사업 부문
+
+        @JsonProperty("b_type")
+        private String businessType; // 업종 추가
     }
 }
