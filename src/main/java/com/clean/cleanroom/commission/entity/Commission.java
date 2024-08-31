@@ -67,4 +67,7 @@ public class Commission {
     @Comment("특이사항")
     private String significant;
 
+    public Commission(Long id) {
+        this.id = id;
+    }
 }
