@@ -56,10 +56,11 @@ public class Estimate {
 
 
 
-    public Estimate (EstimateCreateRequestDto estimateCreateRequestDto,
-                    Commission commission,
+
+    public Estimate(EstimateCreateRequestDto estimateCreateRequestDto,
+                    Long commissionId,
                     Partner partner) {
-        this.commission = commission;
+        this.commission = new Commission(commissionId);
         this.partner = partner;
         this.tmpPrice = estimateCreateRequestDto.getTmpPrice();
         this.statement = estimateCreateRequestDto.getStatement();

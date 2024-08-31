@@ -1,4 +1,5 @@
 package com.clean.cleanroom.estimate.service;
+import com.clean.cleanroom.commission.dto.CommissionEstimateDetailsDto;
 import com.clean.cleanroom.commission.entity.Commission;
 import com.clean.cleanroom.commission.repository.CommissionRepository;
 import com.clean.cleanroom.enums.StatusType;
@@ -29,22 +30,26 @@ public class EstimateService {
 
 
 
-    // 견적서 작성
+    // 견적서 작성 (공간복잡도 개선)
     public EstimateCreateResponseDto createEstimate(String token, EstimateCreateRequestDto estimateCreateRequestDto) {
 
-        //토큰에서 이메일 추출
-        String email = extractEmailFromToken(token);
+        // 토큰에서 이메일 추출
+        String email = jwtUtil.extractEmail(token);
 
-        //이메일로 파트너 찾기
-        Partner partner = findPartnerByEmail(email);
+        // 이메일로 파트너 찾기
+        Partner partner = partnerRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorMsg.PARTNER_NOT_FOUND));
 
-        //의뢰 찾기
-        Commission commission = findCommissionById(estimateCreateRequestDto.getCommissionId());
+        // Commission과 연관된 필요한 데이터만 가져오기
+        CommissionEstimateDetailsDto commissionDetails = commissionRepository.findCommissionDetailsById(estimateCreateRequestDto.getCommissionId())
+                .map(CommissionRepository.CommissionProjection::toDto)
+                .orElseThrow(() -> new CustomException(ErrorMsg.COMMISSION_NOT_FOUND));
 
-        //견적 생성
-        Estimate estimate = createAndSaveEstimate(estimateCreateRequestDto, commission, partner);
+        // Estimate 생성 및 저장
+        Estimate estimate = createAndSaveEstimate(estimateCreateRequestDto, commissionDetails, partner);
 
-        return createEstimateResponseDto(estimate, commission);
+        // DTO 생성 및 반환
+        return createEstimateResponseDto (estimate, commissionDetails);
     }
 
 
@@ -63,6 +68,7 @@ public class EstimateService {
         Commission commission = findCommissionById(estimateUpdateRequestDto.getCommissionId());
 
         estimate.updateEstimate(estimateUpdateRequestDto, commission, partner);
+
         estimateRepository.save(estimate);
 
         return createEstimateUpdateResponseDto(estimate, commission);
@@ -169,16 +175,17 @@ public class EstimateService {
     }
 
     // 견적 생성, 저장
-    private Estimate createAndSaveEstimate(EstimateCreateRequestDto dto, Commission commission, Partner partner) {
-        Estimate estimate = new Estimate(dto, commission, partner);
+    private Estimate createAndSaveEstimate(EstimateCreateRequestDto dto,
+                                           CommissionEstimateDetailsDto commissionDetails,
+                                           Partner partner) {
+        // 새로운 생성자를 사용하여 Estimate 객체 생성
+        Estimate estimate = new Estimate(dto, commissionDetails.getCommissionId(), partner);
         return estimateRepository.save(estimate);
     }
 
     // EstimateCreateResponseDto 생성
-    private EstimateCreateResponseDto createEstimateResponseDto(Estimate estimate, Commission commission) {
-        Members members = commission.getMembers();
-        Address address = commission.getAddress();
-        return new EstimateCreateResponseDto(estimate, members, address, commission);
+    private EstimateCreateResponseDto createEstimateResponseDto(Estimate estimate, CommissionEstimateDetailsDto commissionDetails) {
+        return new EstimateCreateResponseDto(estimate, commissionDetails);
     }
 
     // EstimateUpdateResponseDto 생성
