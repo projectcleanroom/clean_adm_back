@@ -12,6 +12,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 
 @Slf4j
@@ -30,7 +31,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // /login 및 /signup 경로는 필터를 거치지 않도록 설정
-        if ("/partner/login".equals(path) || "/partner/signup".equals(path) || "/partner/validate".equals(path)) {
+        if ("/partner/login".equals(path) ||
+                "/partner/signup".equals(path) ||
+                "/partner/validate".equals(path) ||
+                "/partner/request-email-verification".equals(path) ||
+                "/partner/verify-email".equals(path)
+        ) {
             chain.doFilter(request, response);
             return;
         }
@@ -62,7 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-        }else {
+        } else {
             // 헤더가 없거나 올바른 형식이 아닌 경우 적절한 응답을 설정
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("application/json");
