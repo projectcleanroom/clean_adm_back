@@ -1,6 +1,7 @@
 package com.clean.cleanroom.partner.controller;
 
 import com.clean.cleanroom.partner.dto.*;
+import com.clean.cleanroom.partner.service.EmailSenderService;
 import com.clean.cleanroom.partner.service.PartnerService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -18,8 +19,26 @@ import java.nio.file.Paths;
 public class PartnerController {
 
     private final PartnerService partnerService;
-    public PartnerController(PartnerService partnerService) {
+    private final EmailSenderService emailSenderService;
+
+    public PartnerController(PartnerService partnerService, EmailSenderService emailSenderService) {
         this.partnerService = partnerService;
+        this.emailSenderService = emailSenderService;
+    }
+
+    // 회원가입 전 이메일 인증 요청
+    @PostMapping("/request-email-verification")
+    public ResponseEntity<String> requestEmailVerification(@RequestBody @Valid EmailVerificationRequestDto requestDto) {
+        String verificationCode = partnerService.generateEmailVerificationCode(requestDto.getEmail());
+        emailSenderService.sendVerificationEmail(requestDto.getEmail(), verificationCode);
+        return new ResponseEntity<>("인증 코드가 전송되었습니다.", HttpStatus.OK);
+    }
+
+    // 이메일 인증 완료
+    @PostMapping("/verify-email")
+    public ResponseEntity<String> verifyEmail(@RequestBody VerifcationCodeRequestDto request) {
+        partnerService.verifyEmail(request.getEmail(), request.getCode());
+        return new ResponseEntity<>("이메일이 성공적으로 인증되었습니다.", HttpStatus.OK);
     }
 
     @PostMapping ("/signup")
