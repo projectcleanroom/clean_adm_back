@@ -1,6 +1,7 @@
 package com.clean.cleanroom.business.entity;
 
 
+import com.clean.cleanroom.members.entity.Members;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,4 +43,8 @@ public class Business {
 
     @Column
     private String businessAddress;
+
+    @ManyToOne
+    @JoinColumn(name = "members_id")
+    private Members members;
 }
