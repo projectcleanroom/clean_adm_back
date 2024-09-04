@@ -1,7 +1,7 @@
 package com.clean.cleanroom.members.entity;
 
 import com.clean.cleanroom.account.entity.Account;
-import com.clean.cleanroom.business.entity.BusinessInfo;
+import com.clean.cleanroom.business.entity.Business;
 import com.clean.cleanroom.members.dto.MembersRequestDto;
 import com.clean.cleanroom.util.PasswordUtil;
 import jakarta.persistence.*;
@@ -39,7 +39,7 @@ public class Members {
     private Account selectedAccount;
 
     @OneToMany(mappedBy = "members")
-    private List<BusinessInfo> businessInfo;
+    private List<Business> business;
 
     public Members(MembersRequestDto requestDto) {
         this.email = requestDto.getEmail();
