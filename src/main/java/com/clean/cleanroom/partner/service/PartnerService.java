@@ -5,7 +5,9 @@ import com.clean.cleanroom.exception.ErrorMsg;
 import com.clean.cleanroom.partner.dto.PartnerUploadGetResponseDto;
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.entity.Partner;
+import com.clean.cleanroom.partner.entity.VerificationCode;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
+import com.clean.cleanroom.partner.repository.VerificationCodeRepository;
 import com.clean.cleanroom.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +20,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class PartnerService {
 
     private final PartnerRepository partnerRepository;
+    private final VerificationCodeRepository verificationCodeRepository;
     private final JwtUtil jwtUtil;
 
-    public PartnerService(PartnerRepository partnerRepository, JwtUtil jwtUtil) {
+    public PartnerService(PartnerRepository partnerRepository, JwtUtil jwtUtil, VerificationCodeRepository verificationCodeRepository) {
         this.partnerRepository = partnerRepository;
         this.jwtUtil = jwtUtil;
+        this.verificationCodeRepository = verificationCodeRepository;
     }
 
     //파트너 회원가입
@@ -45,10 +52,75 @@ public class PartnerService {
         if (partnerRepository.existsByCompanyName(requestDto.getCompanyName())) {
             throw new CustomException(ErrorMsg.DUPLICATE_COMPANYNAME);
         }
+        // 이메일 인증 여부 확인
+        if (!isEmailVerified(requestDto.getEmail())) {
+            throw new CustomException(ErrorMsg.EMAIL_NOT_VERIFIED);
+        }
+
         Partner partner = new Partner(requestDto);
         partner.setPassword(requestDto.getPassword());
         partnerRepository.save(partner);
         return new PartnerSignupResponseDto(partner);
+    }
+
+    // 이메일 인증 코드를 생성하고 데이터베이스에 저장하거나 업데이트하는 메서드
+    @Transactional
+    public String generateEmailVerificationCode(String email) {
+        // 6자리 랜덤 인증 코드 생성
+        String verificationCode = generateVerificationCode();
+        // 인증 코드의 만료 시간을 현재 시간으로부터 10분 후로 설정
+        LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(10);
+
+        // 이메일로 기존에 저장된 인증 코드가 있는지 확인
+        Optional<VerificationCode> optionalVerificationCode = verificationCodeRepository.findByEmail(email);
+        if (optionalVerificationCode.isPresent()) {
+            // 기존 코드가 있으면 코드와 만료 시간을 업데이트
+            VerificationCode existingCode = optionalVerificationCode.get();
+            existingCode.updateCodeAndExpiration(verificationCode, expirationTime);
+            verificationCodeRepository.save(existingCode);
+        } else {
+            // 기존 코드가 없으면 새로운 인증 코드 생성
+            VerificationCode newCode = new VerificationCode(email, verificationCode, expirationTime);
+            verificationCodeRepository.save(newCode);
+        }
+
+        return verificationCode;
+    }
+
+    // 랜덤한 6자리 숫자 인증 코드를 생성하는 메서드
+    private String generateVerificationCode() {
+        // 0부터 999999 사이의 랜덤 숫자를 생성하여 6자리 문자열로 반환
+        return String.format("%06d", new Random().nextInt(999999));
+    }
+
+    // 사용자가 입력한 이메일과 인증 코드를 검증하는 메서드
+    @Transactional
+    public void verifyEmail(String email, String code) {
+        // 이메일에 해당하는 인증 코드 조회, 없으면 예외 발생
+        VerificationCode storedCode = verificationCodeRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorMsg.INVALID_VERIFICATION_CODE));
+
+        // 인증 코드가 만료되었는지 확인
+        if (storedCode.isExpired()) {
+            throw new CustomException(ErrorMsg.EXPIRED_VERIFICATION_CODE);
+        }
+
+        // 사용자가 입력한 코드가 저장된 코드와 일치하는지 확인
+        if (!storedCode.getCode().equals(code)) {
+            throw new CustomException(ErrorMsg.INVALID_VERIFICATION_CODE);
+        }
+
+        // 인증 완료 상태로 변경
+        storedCode.markAsVerified();
+        verificationCodeRepository.save(storedCode);
+    }
+
+    // 사용자의 이메일이 인증되었는지 확인하는 메서드
+    public boolean isEmailVerified(String email) {
+        // 이메일에 해당하는 인증 코드가 존재하고, 인증되었는지 여부를 반환
+        return verificationCodeRepository.findByEmail(email)
+                .map(VerificationCode::isVerified)
+                .orElse(false);
     }
 
     //파트너 회원 정보 수정
@@ -152,4 +224,7 @@ public class PartnerService {
         }
 
     }
+
 }
+
+

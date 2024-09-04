@@ -17,8 +17,10 @@ public enum ErrorMsg {
     PASSWORD_INCORRECT(HttpStatus.BAD_REQUEST, 1002, "비밀번호가 옳지 않습니다."),
     MISSING_AUTHORIZATION_HEADER(HttpStatus.BAD_REQUEST, 1004, "Authorization 헤더가 없거나 형식이 올바르지 않습니다."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, 1005, "잘못된 비밀번호 입니다."),
+    INVALID_VERIFICATION_CODE(HttpStatus.BAD_REQUEST, 1009, "유효하지 않은 인증 코드입니다."),
     BAD_JSON_REQUEST(HttpStatus.BAD_REQUEST, 1010, "JSON 포맷에 적합하지 않은 요청입니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST,1011, "잘못된 요청입니다."),
+
 
 
     /* 401 UNAUTHORIZED : 인증되지 않음 */
@@ -27,6 +29,9 @@ public enum ErrorMsg {
     EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, 2003, "Access Token이 만료되었습니다. Refresh Token을 사용하여 재인증하세요."),
     EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, 2004, "Refresh Token이 만료되었습니다. 다시 로그인해주세요."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 2005, "유효하지 않은 토큰입니다."),
+    EMAIL_NOT_VERIFIED(HttpStatus.UNAUTHORIZED, 2006, "이메일 인증이 완료되지 않았습니다."),
+    EXPIRED_VERIFICATION_CODE(HttpStatus.UNAUTHORIZED, 2007, "이메일 인증 코드가 만료되었습니다."),
+    VERIFICATION_CODE_ATTEMPTS_EXCEEDED(HttpStatus.UNAUTHORIZED, 2008, "인증 시도 횟수 초과입니다."),
 
 
     /* 403 FORBIDDEN : 권한 없음 */
