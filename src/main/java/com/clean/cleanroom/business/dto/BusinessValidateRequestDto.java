@@ -1,5 +1,6 @@
 package com.clean.cleanroom.business.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,11 @@ import java.util.List;
 public class BusinessValidateRequestDto {
 
     @JsonProperty("service_key")
+    @Schema(description = "서비스 키")
     private String serviceKey;
 
     @JsonProperty("businesses")
+    @Schema(description = "사업자 정보 목록")
     private List<BusinessRequest> businesses;
 
     @Getter
@@ -24,21 +27,27 @@ public class BusinessValidateRequestDto {
     public static class BusinessRequest {
 
         @JsonProperty("b_no")
-        private String businessNumber; // 사업자 번호 (필수)
+        @Schema(description = "사업자등록번호", example = "0000000000")
+        private String businessNumber; //필수 항목
 
         @JsonProperty("start_dt")
-        private String startDate; // 개업 일자 (필수)
+        @Schema(description = "개업일자 (YYYYMMDD)", example = "20240905")
+        private String startDate; // 필수 항목
 
         @JsonProperty("p_nm")
-        private String representativeName; // 대표자 성명 (필수)
+        @Schema(description = "대표자 성명")
+        private String representativeName; // 필수 항목
 
         @JsonProperty("b_nm")
-        private String companyName; // 회사 이름
+        @Schema(description = "회사 이름")
+        private String companyName;
 
         @JsonProperty("b_sector")
-        private String businessSector; // 사업 부문
+        @Schema(description = "사업 부문")
+        private String businessSector;
 
         @JsonProperty("b_type")
-        private String businessType; // 업종
+        @Schema(description = "업종")
+        private String businessType;
     }
 }

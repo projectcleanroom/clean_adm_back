@@ -1,5 +1,5 @@
 package com.clean.cleanroom.business.dto;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,19 +13,25 @@ import java.util.List;
 public class BusinessValidateResponseDto {
 
     @JsonProperty("status_code")
-    private String statusCode; // 응답 상태 코드
+    @Schema(description = "응답 상태 코드")
+    private String statusCode;
 
     @JsonProperty("request_cnt")
-    private int requestCount; // 요청 정보 갯수
+    @Schema(description = "요청 정보 갯수")
+    private int requestCount;
 
     @JsonProperty("valid_cnt")
-    private int validCount; // 사업자 정보 갯수
+    @Schema(description = "유효한 사업자 정보 갯수")
+    private int validCount;
 
     @JsonProperty("b_no")
-    private String validMessage; // 유효성 검사 메세지
+    @Schema(description = "유효성 검사 메세지")
+    private String validMessage;
 
     @JsonProperty("data")
-    private List<BusinessResponse> data; // 유효성 검사 리스트
+    @Schema(description = "유효성 검사 결과 리스트")
+    private List<BusinessResponse> data;
+
 
     @Getter
     @NoArgsConstructor
@@ -33,16 +39,20 @@ public class BusinessValidateResponseDto {
     public static class BusinessResponse {
 
         @JsonProperty("b_no")
-        private String businessNumber; // 사업자 등록 번호
+        @Schema(description = "사업자 등록 번호", example = "1234567890")
+        private String businessNumber;
 
         @JsonProperty("valid")
+        @Schema(description = "유효성 검사 결과 코드", example = "01")
         private String valid; // 유효성 검사 결과 코드 ("01" - 정상, 기타 - 오류)
 
         @JsonProperty("valid_msg")
-        private String validMessage; // 결과 메세지
+        @Schema(description = "유효성 검사 결과 메세지")
+        private String validMessage;
 
         @JsonProperty("request_param")
-        private RequestParam requestParam; // 사업자 정보 상세 메세지
+        @Schema(description = "사업자 정보 상세 메세지")
+        private RequestParam requestParam;
 
         @Getter
         @NoArgsConstructor
@@ -50,31 +60,40 @@ public class BusinessValidateResponseDto {
         public static class RequestParam {
 
             @JsonProperty("b_no")
-            private String businessNumber; // 사업자 등록 번호
+            @Schema(description = "사업자 등록 번호", example = "1234567890")
+            private String businessNumber;
 
             @JsonProperty("start_dt")
-            private String startDate; // 개업일자
+            @Schema(description = "개업일자 (YYYYMMDD)", example = "20240905")
+            private String startDate;
 
             @JsonProperty("p_nm")
-            private String representativeName; // 대표자 이름
+            @Schema(description = "대표자 이름", example = "김청소")
+            private String representativeName;
 
             @JsonProperty("p_nm2")
-            private String additionalRepresentativeName; // 대표자2 이름
+            @Schema(description = "추가 대표자 이름", example = "김깨끗")
+            private String additionalRepresentativeName;
 
             @JsonProperty("b_nm")
-            private String companyName; // 회사 이름
+            @Schema(description = "회사 이름")
+            private String companyName;
 
             @JsonProperty("corp_no")
-            private String corporationNumber; //법인 등록 번호
+            @Schema(description = "법인 등록 번호", example = "9876543210")
+            private String corporationNumber;
 
             @JsonProperty("b_sector")
-            private String businessSector; // 사업 부문
+            @Schema(description = "사업 부문")
+            private String businessSector;
 
             @JsonProperty("b_type")
-            private String businessType; // 업종 추가
+            @Schema(description = "업종")
+            private String businessType;
 
             @JsonProperty("b_adr")
-            private String businessAddress; // 사업장 주소
+            @Schema(description = "사업장 주소")
+            private String businessAddress;
         }
     }
 }

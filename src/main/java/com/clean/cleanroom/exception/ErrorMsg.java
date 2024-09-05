@@ -51,7 +51,7 @@ public enum ErrorMsg {
     BUSINESS_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, 4008, "사업자 등록을 찾을 수 없습니다."),
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, 4009, "계좌번호를 찾을 수 없습니다."),
     INVALID_ID(HttpStatus.NOT_FOUND, 4010, "존재하지 않는 아이디입니다."),
-    REQUEST_DATA_MALFORMED(HttpStatus.NOT_FOUND, 4011, "필수 요청 파라미터가 누락되었습니다."),
+    REQUEST_DATA_MALFORMED(HttpStatus.NOT_FOUND, 4012, "필수 요청 파라미터가 누락되었습니다."),
 
 
 
