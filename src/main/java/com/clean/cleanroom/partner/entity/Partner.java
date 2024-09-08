@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Entity
@@ -40,6 +43,12 @@ public class Partner {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private PartnerType partnerType;
+
+    @Comment("탈퇴 여부")
+    private boolean isDeleted = false;
+
+    @Comment("탈퇴 날짜")
+    private LocalDateTime deletedAt;
 
 
 
@@ -88,5 +97,12 @@ public class Partner {
         if (requestDto.getPartnerType() != null) {
             this.partnerType = requestDto.getPartnerType();
         }
+    }
+
+
+    // 회원 탈퇴 처리 메서드
+    public void softDelete() {
+        this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
     }
 }

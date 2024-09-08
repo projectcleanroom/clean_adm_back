@@ -225,6 +225,39 @@ public class PartnerService {
 
     }
 
+
+    // 회원 탈퇴
+    public PartnerDeleteResponseDto deletePartner(String token) {
+
+        // 토큰에서 파트너 찾기
+        Partner partner = getPartnerFromToken(token);
+
+        // 이미 탈퇴된 경우 예외 처리
+        if (partner.isDeleted()) {
+            throw new CustomException(ErrorMsg.PARTNER_ALREADY_DELETED);
+        }
+
+        // 파트너 소프트 딜리트 메서드 호출
+        partner.softDelete();
+
+        // 레포지토리에 저장
+        partnerRepository.save(partner);
+
+        return new PartnerDeleteResponseDto(partner);
+    }
+
+
+    // 토큰에서 이메일 추출
+    private Partner getPartnerFromToken(String token) {
+        String email = jwtUtil.extractEmail(token);
+        return getPartnerByEmail(email);
+    }
+
+    // 이메일로 파트너 찾기
+    private Partner getPartnerByEmail (String email){
+        return partnerRepository.findByEmail(email)
+                .orElseThrow(()->new CustomException(ErrorMsg.PARTNER_NOT_FOUND));
+    }
 }
 
 
