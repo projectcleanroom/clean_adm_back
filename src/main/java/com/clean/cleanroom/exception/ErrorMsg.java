@@ -20,6 +20,7 @@ public enum ErrorMsg {
     INVALID_VERIFICATION_CODE(HttpStatus.BAD_REQUEST, 1009, "유효하지 않은 인증 코드입니다."),
     BAD_JSON_REQUEST(HttpStatus.BAD_REQUEST, 1010, "JSON 포맷에 적합하지 않은 요청입니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST,1011, "잘못된 요청입니다."),
+    PARTNER_ALREADY_DELETED(HttpStatus.BAD_REQUEST, 1012, "탈퇴한 회원입니다."),
 
 
 

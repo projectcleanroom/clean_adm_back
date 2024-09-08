@@ -1,5 +1,6 @@
 package com.clean.cleanroom.partner.controller;
 
+import com.clean.cleanroom.estimate.dto.EstimateDeleteResponseDto;
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.service.EmailSenderService;
 import com.clean.cleanroom.partner.service.PartnerService;
@@ -82,5 +83,12 @@ public class PartnerController {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, contentType);
         return new ResponseEntity<>(partnerUploadResponseDto.getFileData(), headers, HttpStatus.OK);
+    }
+
+    // 회원 탈퇴
+    @PatchMapping("/delete")
+    public ResponseEntity<PartnerDeleteResponseDto> deletePartner(@RequestHeader("Authorization") String token) {
+        PartnerDeleteResponseDto responseDto = partnerService.deletePartner (token);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }
