@@ -4,6 +4,7 @@ import com.clean.cleanroom.estimate.dto.EstimateDeleteResponseDto;
 import com.clean.cleanroom.partner.dto.*;
 import com.clean.cleanroom.partner.service.EmailSenderService;
 import com.clean.cleanroom.partner.service.PartnerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/partner")
+@Tag(name = "파트너")
 public class PartnerController {
 
     private final PartnerService partnerService;

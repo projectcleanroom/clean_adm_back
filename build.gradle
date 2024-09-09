@@ -54,8 +54,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    implementation 'org.hibernate.orm:hibernate-core:6.2.2.Final'
-
 }
 
 tasks.named('test') {

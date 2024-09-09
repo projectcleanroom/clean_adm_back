@@ -1,10 +1,8 @@
 package com.clean.cleanroom.estimate.controller;
 
-import com.clean.cleanroom.commission.entity.Commission;
 import com.clean.cleanroom.estimate.dto.*;
 import com.clean.cleanroom.estimate.service.EstimateService;
-import com.clean.cleanroom.util.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping ("/partner/estimate")
+@Tag(name = "청소 견적")
 public class EstimateController {
 
     private EstimateService estimateService;

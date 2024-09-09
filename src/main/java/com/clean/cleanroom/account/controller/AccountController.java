@@ -4,6 +4,7 @@ import com.clean.cleanroom.account.dto.AccountRequestDto;
 import com.clean.cleanroom.account.dto.MessageResponseDto;
 import com.clean.cleanroom.account.entity.Account;
 import com.clean.cleanroom.account.service.AccountService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/partner/account")
+@Tag(name = "계좌")
 public class AccountController {
 
     private AccountService accountInfoService;

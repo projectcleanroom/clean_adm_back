@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cleanRoom.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cleanRoom.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/cleanRoom.test.iml" filepath="$PROJECT_DIR$/.idea/modules/cleanRoom.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.clean.cleanRoom.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.clean.cleanRoom.main.iml" />
     </modules>
   </component>
 </project>

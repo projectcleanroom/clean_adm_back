@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class PartnerDeleteResponseDto {
 
+    @Schema(description = "파트너 식별값")
     private Long id;
 
     @Schema(description = "탈퇴 메시지", example = "회원 탈퇴 완료.")

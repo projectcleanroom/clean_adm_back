@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class PartnerSignupResponseDto {
 
+    @Schema(description = "회원가입 성공 메세지", example = "회원가입에 성공하였습니다.")
     private String messege;
 
 
