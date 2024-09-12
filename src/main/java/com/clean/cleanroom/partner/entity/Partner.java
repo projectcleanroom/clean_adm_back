@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-//@Where(clause = "is_deleted = false")  // 삭제되지 않은 데이터만 조회
 public class Partner {
 
     @Id
