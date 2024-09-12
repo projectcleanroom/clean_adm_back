@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-@Where(clause = "is_deleted = false")
 public class Partner {
 
     @Id
