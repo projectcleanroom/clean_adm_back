@@ -53,9 +53,6 @@ public class BatchConfig {
     public Tasklet deleteOldPartnersTasklet() {
         return (contribution, chunkContext) -> {
 
-            // 배치 작업 시작
-            System.out.println("============배치 작업 시작");
-
             // 파트너 레포지토리에서 한달전에 탈퇴한 회원 찾기
             List<Partner> oldDeletedPartners =
                     partnerRepository.findAllByIsDeletedTrueAndDeletedAtBefore(LocalDateTime.now().minusMonths(1));
