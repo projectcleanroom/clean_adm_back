@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Configuration
-@EnableBatchProcessing // 배치 기능 활성화
+@EnableBatchProcessing
 public class BatchConfig {
 
     private final JobRepository jobRepository;
@@ -36,24 +36,24 @@ public class BatchConfig {
 
 
     @Bean
-    public Job deleteOldPartnersJob() {
-        return new JobBuilder("deleteOldPartnersJob", jobRepository)
-                .start(deleteOldPartnersStep())
+    public Job deletePartnersJob() {
+        return new JobBuilder("한 달 이상된 탈퇴 회원 데이터 삭제 Job", jobRepository)
+                .start(deletePartnersStep())
                 .build();
     }
 
     @Bean
-    public Step deleteOldPartnersStep() {
-        return new StepBuilder("deleteOldPartnersStep", jobRepository)
-                .tasklet(deleteOldPartnersTasklet(), transactionManager)
+    public Step deletePartnersStep() {
+        return new StepBuilder("한 달 이상된 탈퇴 회원 데이터 삭제 Step", jobRepository)
+                .tasklet(deletePartnersTasklet(), transactionManager)
                 .build();
     }
 
     @Bean
-    public Tasklet deleteOldPartnersTasklet() {
+    public Tasklet deletePartnersTasklet() {
         return (contribution, chunkContext) -> {
 
-            // 파트너 레포지토리에서 한달전에 탈퇴한 회원 찾기
+            // 파트너 레포지토리에서 한 달 전에 탈퇴한 회원 찾기
             List<Partner> oldDeletedPartners =
                     partnerRepository.findAllByIsDeletedTrueAndDeletedAtBefore(LocalDateTime.now().minusMonths(1));
 

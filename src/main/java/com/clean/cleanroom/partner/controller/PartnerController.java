@@ -93,4 +93,11 @@ public class PartnerController {
         PartnerDeleteResponseDto responseDto = partnerService.deletePartner (token);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
+
+    // 인수 테스트용 인증코드 조회 API
+    @GetMapping("/get-verification-code")
+    public ResponseEntity<String> getVerificationCode(@RequestParam String email) {
+        String verificationCode = emailSenderService.getEmailCode(email);
+        return ResponseEntity.ok(verificationCode);
+    }
 }

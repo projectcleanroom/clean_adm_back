@@ -27,6 +27,9 @@
 //}
 package com.clean.cleanroom.partner.service;
 
+import com.clean.cleanroom.exception.CustomException;
+import com.clean.cleanroom.partner.entity.VerificationCode;
+import com.clean.cleanroom.partner.repository.VerificationCodeRepository;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -34,13 +37,17 @@ import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
+import java.util.Optional;
+
 @Service
 public class EmailSenderService {
 
     private final JavaMailSender mailSender;
+    private final VerificationCodeRepository verificationCodeRepository;
 
-    public EmailSenderService(JavaMailSender mailSender) {
+    public EmailSenderService(JavaMailSender mailSender, VerificationCodeRepository verificationCodeRepository) {
         this.mailSender = mailSender;
+        this.verificationCodeRepository = verificationCodeRepository;
     }
 
     public void sendVerificationEmail(String email, String code) {
@@ -64,5 +71,15 @@ public class EmailSenderService {
         } catch (MessagingException e) {
             e.printStackTrace(); // 실제 코드에서는 예외 처리를 적절히 해야 합니다
         }
+    }
+
+    public String getEmailCode(String email) {
+        // Optional로 반환된 값을 처리
+        Optional<VerificationCode> optionalVerificationCode = verificationCodeRepository.findByEmail(email);
+
+        // 값이 존재하면 인증 코드를 반환하고, 값이 없으면 적절한 예외 처리나 기본값 반환
+        return optionalVerificationCode
+                .map(VerificationCode::getCode)  // VerificationCode 객체가 있으면 getCode() 호출
+                .orElseThrow(() -> new IllegalArgumentException("인증 코드를 찾을 수 없습니다."));  // 값이 없을 경우 예외 처리
     }
 }
