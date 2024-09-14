@@ -34,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if ("/partner/login".equals(path) ||
                 "/partner/signup".equals(path) ||
                 "/partner/validate".equals(path) ||
+                "/partner/get-verification-code".equals(path) ||
                 "/partner/request-email-verification".equals(path) ||
                 "/partner/verify-email".equals(path)
         ) {
