@@ -73,13 +73,25 @@ public class EmailSenderService {
         }
     }
 
+
+    // 포스트맨 테스트용 인증코드 조회 API
+//    public String getEmailCode(String email) {
+//        // Optional로 반환된 값을 처리
+//        Optional<VerificationCode> optionalVerificationCode = verificationCodeRepository.findByEmail(email);
+//
+//        // 값이 존재하면 인증 코드를 반환하고, 값이 없으면 적절한 예외 처리나 기본값 반환
+//        return optionalVerificationCode
+//                .map(VerificationCode::getCode)  // VerificationCode 객체가 있으면 getCode() 호출
+//                .orElseThrow(() -> new IllegalArgumentException("인증 코드를 찾을 수 없습니다."));  // 값이 없을 경우 예외 처리
+//    }
     public String getEmailCode(String email) {
-        // Optional로 반환된 값을 처리
+        // 데이터베이스에서 이메일로 인증 코드를 조회
         Optional<VerificationCode> optionalVerificationCode = verificationCodeRepository.findByEmail(email);
 
-        // 값이 존재하면 인증 코드를 반환하고, 값이 없으면 적절한 예외 처리나 기본값 반환
-        return optionalVerificationCode
-                .map(VerificationCode::getCode)  // VerificationCode 객체가 있으면 getCode() 호출
-                .orElseThrow(() -> new IllegalArgumentException("인증 코드를 찾을 수 없습니다."));  // 값이 없을 경우 예외 처리
+        // 인증 코드가 존재하는지 확인하고, 없으면 예외 발생
+        VerificationCode verificationCode = optionalVerificationCode
+                .orElseThrow(() -> new IllegalArgumentException("인증 코드를 찾을 수 없습니다."));
+
+        return verificationCode.getCode();  // 인증 코드 반환
     }
 }

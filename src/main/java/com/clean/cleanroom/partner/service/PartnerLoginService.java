@@ -25,7 +25,7 @@ public class PartnerLoginService {
     // 로그인 로직
     public ResponseEntity<PartnerLoginResponseDto> login(PartnerLoginRequestDto requestDto) {
         // 이메일로 회원을 조회. 없으면 예외를 던짐
-        Partner partner= partnerRepository.findByEmail(requestDto.getEmail())
+        Partner partner= partnerRepository.findActiveByEmail(requestDto.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorMsg.INVALID_ID));
 
         // 비밀번호가 일치하는지 확인. 일치하지 않으면 예외를 던짐

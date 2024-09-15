@@ -210,7 +210,7 @@ public class EstimateService {
 
     //이메일로 파트너 찾는 메서드
     private Partner getPartnerByEmail (String email){
-        return partnerRepository.findByEmail(email)
+        return partnerRepository.findActiveByEmail(email)
                 .orElseThrow(()->new CustomException(ErrorMsg.PARTNER_NOT_FOUND));
     }
 
