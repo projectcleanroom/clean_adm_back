@@ -11,8 +11,6 @@ import java.util.Optional;
 
 public interface PartnerRepository extends JpaRepository<Partner, Long> {
 
-    Optional<Partner> findByEmail(String email);
-
     // 활성 상태의 파트너만 조회
     @Query("SELECT p FROM Partner p WHERE p.email = :email AND p.isDeleted = false")
     Optional<Partner> findActiveByEmail(@Param("email") String email);
