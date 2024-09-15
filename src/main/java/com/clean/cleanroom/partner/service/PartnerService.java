@@ -128,7 +128,7 @@ public class PartnerService {
     public PartnerProfileResponseDto profile(String token, PartnerUpdateProfileRequestDto requestDto) {
         String email = jwtUtil.extractEmail(token);
         // email 유무
-        Partner partner = partnerRepository.findByEmail(email).orElseThrow(
+        Partner partner = partnerRepository.findActiveByEmail(email).orElseThrow(
                 () -> new CustomException(ErrorMsg.INVALID_ID));
         // phoneNumber 유무
         if (!partner.getPhoneNumber().equals(requestDto.getPhoneNumber()) &&
@@ -156,7 +156,7 @@ public class PartnerService {
 
     public PartnerGetProfileResponseDto getProfile(String token) {
         String email = jwtUtil.extractEmail(token);
-        Partner partner = partnerRepository.findByEmail(email).orElseThrow(
+        Partner partner = partnerRepository.findActiveByEmail(email).orElseThrow(
                 () -> new CustomException(ErrorMsg.INVALID_ID)
         );
         return new PartnerGetProfileResponseDto(partner);
@@ -255,7 +255,7 @@ public class PartnerService {
 
     // 이메일로 파트너 찾기
     private Partner getPartnerByEmail (String email){
-        return partnerRepository.findByEmail(email)
+        return partnerRepository.findActiveByEmail(email)
                 .orElseThrow(()->new CustomException(ErrorMsg.PARTNER_NOT_FOUND));
     }
 }
