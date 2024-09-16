@@ -7,6 +7,7 @@ import com.clean.cleanroom.estimate.dto.EstimateCreateRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimatePatchRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimateUpdateRequestDto;
 import com.clean.cleanroom.partner.entity.Partner;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Estimate {
 
     @ManyToOne
     @JoinColumn(name = "commission_id")
-    @JsonIgnore
+    @JsonBackReference
     private Commission commission;
 
     @ManyToOne
