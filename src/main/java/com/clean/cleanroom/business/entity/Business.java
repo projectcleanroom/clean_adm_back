@@ -24,11 +24,17 @@ public class Business {
     @Column(nullable = false)
     private LocalDate startDate; // 개업일
 
+    @Column
+    private String additionalRepresentativeName;
+
     @Column(nullable = false)
     private String representativeName; // 대표자 설명
 
     @Column(nullable = false)
     private String companyName; // 업체명
+
+    @Column
+    private String corporationNumber;
 
     @Column
     private String businessSector; // 사업 부문
