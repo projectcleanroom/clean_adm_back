@@ -13,11 +13,13 @@ import com.clean.cleanroom.members.entity.Address;
 import com.clean.cleanroom.members.entity.Members;
 import com.clean.cleanroom.partner.entity.Partner;
 import com.clean.cleanroom.partner.repository.PartnerRepository;
+import com.clean.cleanroom.redis.RedisService;
 import com.clean.cleanroom.util.JwtUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class EstimateService {
@@ -27,15 +29,18 @@ public class EstimateService {
     private final PartnerRepository partnerRepository;
     private final CommissionRepository commissionRepository;
     private final JwtUtil jwtUtil;
+    private final RedisService redisService;
 
     public EstimateService(EstimateRepository estimateRepository,
                            PartnerRepository partnerRepository,
                            CommissionRepository commissionRepository,
-                           JwtUtil jwtUtil) {
+                           JwtUtil jwtUtil,
+                           RedisService redisService) {
         this.estimateRepository = estimateRepository;
         this.partnerRepository = partnerRepository;
         this.commissionRepository = commissionRepository;
         this.jwtUtil = jwtUtil;
+        this.redisService = redisService;
     }
 
 
@@ -138,12 +143,51 @@ public class EstimateService {
     }
 
 
-    //파트너 견적 내역 조회
-    public List<EstimateListResponseDto> getAllEstimatesForPartner (String token) {
+//    //파트너 견적 내역 조회
+//    public List<EstimateListResponseDto> getAllEstimatesForPartner (String token) {
+//
+//        // 토큰으로 파트너 찾기
+//        Partner partner = getPartnerFromToken(token);
+//
+//        List<Estimate> estimates = estimateRepository.findByPartnerId(partner.getId());
+//
+//        // 견적 내역이 존재하지 않으면 예외 발생
+//        if (estimates.isEmpty()) {
+//            throw new CustomException(ErrorMsg.ESTIMATE_NOT_FOUND);
+//        }
+//
+//        List<EstimateListResponseDto> estimateListResponseDtos = new ArrayList<>();
+//
+//        // 각 Estimate에 대해 DTO 변환
+//        for (Estimate estimate : estimates) {
+//            Commission commission = estimate.getCommission();
+//            Members members = commission.getMembers();
+//            Address address = commission.getAddress();
+//
+//            // DTO에 필요한 정보를 전달하여 객체 생성
+//            EstimateListResponseDto dto = new EstimateListResponseDto(estimate, members, address, commission);
+//            estimateListResponseDtos.add(dto);
+//        }
+//
+//        return estimateListResponseDtos;
+//    }
 
+    public List<EstimateListResponseDto> getAllEstimatesForPartner(String token) {
         // 토큰으로 파트너 찾기
         Partner partner = getPartnerFromToken(token);
+        String redisKey = "partner_estimates:" + partner.getId();
 
+        // Redis에서 데이터를 조회
+        List<EstimateListResponseDto> estimateListResponseDtos =
+                redisService.getObject(redisKey, List.class);
+        System.out.println("================캐싱 적용");
+
+        // Redis에 데이터가 있다면 바로 반환
+        if (estimateListResponseDtos != null && !estimateListResponseDtos.isEmpty()) {
+            return estimateListResponseDtos;
+        }
+
+        // Redis에 데이터가 없는 경우, DB에서 조회
         List<Estimate> estimates = estimateRepository.findByPartnerId(partner.getId());
 
         // 견적 내역이 존재하지 않으면 예외 발생
@@ -151,7 +195,8 @@ public class EstimateService {
             throw new CustomException(ErrorMsg.ESTIMATE_NOT_FOUND);
         }
 
-        List<EstimateListResponseDto> estimateListResponseDtos = new ArrayList<>();
+        // DTO 리스트 생성 및 변환
+        estimateListResponseDtos = new ArrayList<>();
 
         // 각 Estimate에 대해 DTO 변환
         for (Estimate estimate : estimates) {
@@ -164,8 +209,12 @@ public class EstimateService {
             estimateListResponseDtos.add(dto);
         }
 
+        // 데이터를 Redis에 캐싱 (30분 동안 유지)
+        redisService.setObject(redisKey, estimateListResponseDtos, 30, TimeUnit.MINUTES);
+
         return estimateListResponseDtos;
     }
+
 
 
     // 회원에게 발송한 확정 견적 내역 조회
