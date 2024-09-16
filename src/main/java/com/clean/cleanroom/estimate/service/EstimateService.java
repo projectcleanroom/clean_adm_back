@@ -173,6 +173,8 @@ public class EstimateService {
 //    }
 
     public List<EstimateListResponseDto> getAllEstimatesForPartner(String token) {
+        // 최윤돌이 바보
+
         // 토큰으로 파트너 찾기
         Partner partner = getPartnerFromToken(token);
         String redisKey = "partner_estimates:" + partner.getId();

@@ -4,6 +4,7 @@ import com.clean.cleanroom.account.entity.Account;
 import com.clean.cleanroom.business.entity.Business;
 import com.clean.cleanroom.members.dto.MembersRequestDto;
 import com.clean.cleanroom.util.PasswordUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,12 +34,14 @@ public class Members {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "members")
+    @JsonIgnore
     private List<Address> address;
 
     @ManyToOne
     private Account selectedAccount;
 
     @OneToMany(mappedBy = "members")
+    @JsonIgnore
     private List<Business> business;
 
     public Members(MembersRequestDto requestDto) {

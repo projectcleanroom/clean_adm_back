@@ -1,6 +1,7 @@
 package com.clean.cleanroom.members.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @JsonIgnore
     private Members members;
 
     @Column(nullable = false, length = 30)

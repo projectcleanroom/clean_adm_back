@@ -1,5 +1,6 @@
 package com.clean.cleanroom.config;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -24,6 +25,7 @@ public class RedisConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());  // Java 8 Date/Time 모듈 추가
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);  // ISO-8601 포맷으로 날짜 처리
+        objectMapper.configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 
         // GenericJackson2JsonRedisSerializer에 ObjectMapper 적용
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
@@ -53,3 +55,4 @@ public class RedisConfig {
         return objectMapper;
     }
 }
+

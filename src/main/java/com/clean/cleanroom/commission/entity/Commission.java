@@ -6,6 +6,7 @@ import com.clean.cleanroom.enums.StatusType;
 import com.clean.cleanroom.estimate.entity.Estimate;
 import com.clean.cleanroom.members.entity.Address;
 import com.clean.cleanroom.members.entity.Members;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Commission {
 
     @ManyToOne
     @JoinColumn(name = "members_id")
+    @JsonIgnore
     private Members members;
 
     @ManyToOne
@@ -34,6 +36,7 @@ public class Commission {
     private Address address;
 
     @OneToMany(mappedBy = "commission", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Estimate> estimates;
 
     @Column(nullable = false, length = 255)
