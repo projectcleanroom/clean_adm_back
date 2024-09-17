@@ -1,12 +1,13 @@
 package com.clean.cleanroom.estimate.entity;
 
 import com.clean.cleanroom.commission.entity.Commission;
-import com.clean.cleanroom.enums.HouseType;
 import com.clean.cleanroom.enums.StatusType;
 import com.clean.cleanroom.estimate.dto.EstimateCreateRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimatePatchRequestDto;
 import com.clean.cleanroom.estimate.dto.EstimateUpdateRequestDto;
 import com.clean.cleanroom.partner.entity.Partner;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,12 @@ public class Estimate {
 
     @ManyToOne
     @JoinColumn(name = "commission_id")
+    @JsonBackReference
     private Commission commission;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
+    @JsonManagedReference
     private Partner partner;
 
     @Column(nullable = false)
