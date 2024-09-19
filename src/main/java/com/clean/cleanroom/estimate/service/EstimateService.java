@@ -143,35 +143,7 @@ public class EstimateService {
     }
 
 
-//    //파트너 견적 내역 조회
-//    public List<EstimateListResponseDto> getAllEstimatesForPartner (String token) {
-//
-//        // 토큰으로 파트너 찾기
-//        Partner partner = getPartnerFromToken(token);
-//
-//        List<Estimate> estimates = estimateRepository.findByPartnerId(partner.getId());
-//
-//        // 견적 내역이 존재하지 않으면 예외 발생
-//        if (estimates.isEmpty()) {
-//            throw new CustomException(ErrorMsg.ESTIMATE_NOT_FOUND);
-//        }
-//
-//        List<EstimateListResponseDto> estimateListResponseDtos = new ArrayList<>();
-//
-//        // 각 Estimate에 대해 DTO 변환
-//        for (Estimate estimate : estimates) {
-//            Commission commission = estimate.getCommission();
-//            Members members = commission.getMembers();
-//            Address address = commission.getAddress();
-//
-//            // DTO에 필요한 정보를 전달하여 객체 생성
-//            EstimateListResponseDto dto = new EstimateListResponseDto(estimate, members, address, commission);
-//            estimateListResponseDtos.add(dto);
-//        }
-//
-//        return estimateListResponseDtos;
-//    }
-
+    //파트너 견적 내역 조회
     public List<EstimateListResponseDto> getAllEstimatesForPartner(String token) {
 
         // 토큰으로 파트너 찾기
